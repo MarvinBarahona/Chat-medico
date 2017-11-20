@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { EnfermeraModule } from './enfermera/enfermera.module';
 import { PacienteModule } from './paciente/paciente.module';
+import { MedicoModule } from './medico/medico.module';
 import { LoginModule } from './login';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { LoginModule } from './login';
     AdminModule,
     EnfermeraModule,
     PacienteModule,
+    MedicoModule,
     AppRoutingModule
   ],
   declarations: [

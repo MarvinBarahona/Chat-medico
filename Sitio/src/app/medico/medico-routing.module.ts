@@ -6,17 +6,17 @@ import { AppAuthGuard } from './../login'
 
 const routes: Routes = [
   {
-    path: 'paciente',
-    component: c.PacienteRootComponent,
+    path: 'medico',
+    component: c.MedicoRootComponent,
     children: [
       {
         path: '',
-        redirectTo: '/paciente/chats',
+        redirectTo: '/medico/atender',
         pathMatch: 'full'
       },
       {
         path: 'chats',
-        component: c.SolicitarComponent,
+        component: c.AtenderComponent,
         // canActivate: [AppAuthGuard],
         // data: {politica: 143}
       },
@@ -47,4 +47,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [AppAuthGuard]
 })
-export class PacienteRoutingModule { }
+export class MedicoRoutingModule { }
