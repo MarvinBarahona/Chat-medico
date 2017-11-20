@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AdminModule } from './admin/admin.module';
+import { EnfermeraModule } from './enfermera/enfermera.module';
 import { LoginModule } from './login';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { LoginModule } from './login';
     CookieModule.forRoot(),
     LoginModule,
     AdminModule,
+    EnfermeraModule,
     AppRoutingModule
   ],
   declarations: [
