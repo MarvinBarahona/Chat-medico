@@ -1,0 +1,27 @@
+<!-- Side nav -->
+<ul class="side-nav fixed">
+  <li routerLinkActive="active">
+    <a routerLink="/paciente/solicitar">Solicitar consulta</a>
+  </li>
+  <li routerLinkActive="active">
+    <a routerLink="/paciente/conversatorios">Conversatorios</a>
+  </li>
+</ul>
+<!-- /Side nav -->
+
+<!-- Espacio para los componentes (ver el css de este componente) -->
+<div class="component">
+  <div>
+    <h4 class="center-align">Paciente</h4>
+  </div>
+
+  <div class="row">
+    <div class="col l8">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="col l4">
+      <recordatorios></recordatorios>
+    </div>
+  </div>
+
+</div>

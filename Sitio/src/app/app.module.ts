@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AdminModule } from './admin/admin.module';
 import { EnfermeraModule } from './enfermera/enfermera.module';
+import { PacienteModule } from './paciente/paciente.module';
 import { LoginModule } from './login';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { LoginModule } from './login';
     LoginModule,
     AdminModule,
     EnfermeraModule,
+    PacienteModule,
     AppRoutingModule
   ],
   declarations: [
