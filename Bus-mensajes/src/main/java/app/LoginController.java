@@ -13,7 +13,7 @@ import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.stereotype.Controller;
-import pojo.UserLogin;
+import pojo.LoginUser;
 
 @Controller
 public class LoginController {
@@ -24,7 +24,7 @@ public class LoginController {
     ObjectMapper mapper = new ObjectMapper();
     
     @MessageMapping("/login")
-    public void login(UserLogin user) throws Exception {
+    public void login(LoginUser user) throws Exception {
         StompClient stompClient = new StompClient();
         StompSession session = stompClient.connect(8090);
         
