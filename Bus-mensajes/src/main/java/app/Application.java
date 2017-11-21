@@ -16,6 +16,8 @@ public class Application implements WebApplicationInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+        
+        
     }
     
     @Override

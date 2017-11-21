@@ -8,12 +8,12 @@
         <div class="row">
           <!-- Correo -->
           <div class="input-field col s12 l8 offset-l2">
-            <input id="usuario" type="email" class="validate" name="correo" [(ngModel)]="model.correo" required>
+            <input id="usuario" type="email" class="validate" name="correo" [(ngModel)]="login.username" required>
             <label for="usuario" data-error="Ingrese un correo válido">Correo</label>
           </div>
           <!-- Contraseña -->
           <div class="input-field col s12 l8 offset-l2">
-            <input id="contra" type="password" class="validate" name="contra" [(ngModel)]="model.contra" required>
+            <input id="contra" type="password" class="validate" name="contra" [(ngModel)]="login.password" required>
             <label for="contra">Contraseña</label>
           </div>
         </div>

@@ -52,5 +52,5 @@
             </plugin>
         </plugins>
     </build>
-    <name>mod-mensaje</name>
+    <name>Auth-app</name>
 </project>

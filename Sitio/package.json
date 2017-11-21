@@ -32,8 +32,11 @@
     "jquery": "^2.2.4",
     "materialize-css": "^0.99.0",
     "ng2-datepicker": "^2.1.3",
+    "ng2-stomp-service": "^1.2.2",
     "ngx-cookie": "^1.0.0",
     "rxjs": "^5.1.0",
+    "sockjs-client": "^1.1.4",
+    "stompjs": "^2.3.3",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {

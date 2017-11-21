@@ -2,13 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { CookieService } from 'ngx-cookie';
+import { StompService } from 'ng2-stomp-service';
+
+import { Usuario, Login } from './../clases';
+
+declare var Materialize: any;
 
 @Component({
   templateUrl: './login.component.html'
 })
 
 export class LoginComponent implements OnInit {
-  model: any = {};
+  login: Login;
   returnUrl: string;
   errorMessage: string;
   message: string;
@@ -16,36 +21,47 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private cookieService: CookieService
-  ) { }
+    private cookieService: CookieService,
+    private stomp: StompService
+  ) {
+    this.login = new Login();
+
+    this.stomp.configure({
+      host: 'http://localhost:8080/hello',
+      debug: false,
+      queue: { 'init': false }
+    });
+  }
 
   // Método: logueo
   // Objetivo: Permite al usuario iniciar sesión
   logueo() {
     this.errorMessage = undefined;
-    this.message = "Iniciando sesión..."
+    this.message = "Iniciando sesión...";
 
-    // Consumir el servicio de logueo
-    // this.authService.logueo(this.model.correo, this.model.contra).subscribe(
-    //   r => {
-    //     this.cookieService.put('token', r['token']);
-    //     this.cookieService.putObject('usuario', r['usuario']);
-    //     window.location.href = '.' + this.returnUrl;
-    //   },
-    //   error => {
-    //     this.message = undefined;
-    //     if (error.status === 404) {
-    //       this.errorMessage = "Usuario no encontrado"
-    //     }
-    //     if (error.status === 401) {
-    //       this.errorMessage = "Contraseña incorrecta"
-    //     }
-    //   }
-    // );
+    this.stomp.send('/app/login', this.login);
   }
 
   ngOnInit() {
     // Captura el siguiente URL
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/consultas';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+
+    this.stomp.startConnect().then(() => {
+      this.stomp.done('init');
+
+      //subscribe
+      this.stomp.subscribe('/topic/loginResponse',
+        (user: Usuario) => {
+          Materialize.toast(user.nombre, 3000, 'toastSuccess');
+        }
+      );
+
+      //subscribe
+      this.stomp.subscribe('/topic/loginResponse/error',
+        (e: string) => {
+          Materialize.toast(e, 3000, 'toastError');
+        }
+      );
+    });
   }
 }
