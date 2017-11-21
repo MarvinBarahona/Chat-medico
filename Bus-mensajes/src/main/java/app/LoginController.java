@@ -1,7 +1,6 @@
 package app;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import pojo.Message;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.logging.Level;
@@ -24,12 +23,14 @@ public class LoginController {
     
     ObjectMapper mapper = new ObjectMapper();
     
+    // Este método se ejecuta al mandar un mensaje a /app/login
     @MessageMapping("/login")
     public void login(LoginUser user) throws Exception {
-        System.out.println("Reciving from angular");
+        // Obtener una sesión de token. 
         StompClient stompClient = new StompClient();
         StompSession session = stompClient.connect(8090);
         
+        // Suscribirse a la respuesta exitosa de la app.
         session.subscribe("/topic/loginResponse", new StompFrameHandler() {
 
             @Override
@@ -38,9 +39,7 @@ public class LoginController {
             @Override
             public void handleFrame(StompHeaders sh, Object o) {
                 try {
-                    System.out.println("Reciving from app");
                     User user = mapper.readValue(new String((byte[]) o), User.class);
-                    System.out.println("Sending to angular");
                     template.convertAndSend("/topic/loginResponse", user);
                     session.disconnect();
                 } catch (IOException ex) {
@@ -49,23 +48,28 @@ public class LoginController {
             }
         });
         
+        // Suscribirse a la respuesta fallida de la app.
         session.subscribe("/topic/loginResponse/error", new StompFrameHandler() {
 
             @Override
             public Type getPayloadType(StompHeaders sh) {return byte[].class;}
 
             @Override
-            public void handleFrame(StompHeaders sh, Object o) {
-                System.out.println("Reciving from app");
-                String error = new String((byte[]) o);
-                System.out.println("Sending to angular");
-                template.convertAndSend("/topic/loginResponse/error", error);
-                session.disconnect();
+            public void handleFrame(StompHeaders sh, Object o){
+                try {
+                    //Retorna mensaje de error al sitio.
+                    String error = mapper.readValue(new String((byte[]) o), String.class);
+                    template.convertAndSend("/topic/loginResponse/error", error);
+                    session.disconnect();
+                } catch (IOException ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             }
         });
         
+        // Mandar mensaje a la app. 
         String m = mapper.writeValueAsString(user);
-        System.out.println("Sending to app");
-        session.send("/app/login", m.getBytes());
+        session.send("/auth/login", m.getBytes());
     }
 }

@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   ) {
     this.login = new Login();
 
+    // Configuración del cliente stomp.
     this.stomp.configure({
       host: 'http://localhost:8080/hello',
       debug: false,
@@ -33,35 +34,35 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // Método: logueo
-  // Objetivo: Permite al usuario iniciar sesión
-  logueo() {
-    this.errorMessage = undefined;
-    this.message = "Iniciando sesión...";
-
-    this.stomp.send('/app/login', this.login);
-  }
-
   ngOnInit() {
     // Captura el siguiente URL
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
 
+    // Luego de conectarse.
     this.stomp.startConnect().then(() => {
       this.stomp.done('init');
 
-      //subscribe
+      // Suscribirse a la respuesta exitosa.
       this.stomp.subscribe('/topic/loginResponse',
         (user: Usuario) => {
           Materialize.toast(user.nombre, 3000, 'toastSuccess');
         }
       );
 
-      //subscribe
+      // Suscribirse a la respuesta fallida
       this.stomp.subscribe('/topic/loginResponse/error',
         (e: string) => {
           Materialize.toast(e, 3000, 'toastError');
         }
       );
     });
+  }
+
+  logueo() {
+    this.errorMessage = undefined;
+    this.message = "Iniciando sesión...";
+
+    // Mandar mensaje al bus.
+    this.stomp.send('/app/login', this.login);
   }
 }
