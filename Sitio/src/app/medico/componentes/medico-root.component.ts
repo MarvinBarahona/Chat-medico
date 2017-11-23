@@ -16,6 +16,5 @@ export class  MedicoRootComponent implements OnInit {
       .subscribe((event)=>{
         this.chateando = this.router.url.includes("chats/");
       });
-
   }
 }

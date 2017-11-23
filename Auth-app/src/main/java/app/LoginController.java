@@ -3,29 +3,40 @@ package app;
 import models.LoginUser;
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import persistence.LoginUserRepository;
 
 @Controller
 public class LoginController {
     
     @Autowired
     private SimpMessagingTemplate template; 
+    
+    @Autowired
+    private LoginUserRepository repository;
 
-    // Este mÃ©todo se ejecuta al mandar un mensaje a /auth/login
-    @MessageMapping("/login")
-    public void login(LoginUser loginUser) throws Exception {
-        User user = new User(loginUser.getUsername(), "PÃ©rez");
+    // Este método se ejecuta al mandar un mensaje a /auth/login
+    @MessageMapping("/login/{id}")
+    public void login(LoginUser loginUser, @DestinationVariable String id) throws Exception {
+        LoginUser databaseUser = repository.findByUsername(loginUser.getUsername());
         
-        if(!user.getNombre().contains("a")){
-            // Mandando mensaje de error al bus.
-            template.convertAndSend("/topic/loginResponse/error", "Error en el email");
+        if(databaseUser != null){
+            if(databaseUser.getPassword().equals(loginUser.getPassword())){
+                User user = new User(databaseUser.getName(), databaseUser.getRole());
+                // Mandando respuesta exitosa al bus.
+                template.convertAndSend("/topic/loginResponse/"+id, user);
+            }
+            else{
+                // Mandando mensaje de error al bus.
+                template.convertAndSend("/topic/loginResponse/error/"+id, "Contraseña equivocada");
+            }
         }
-        
         else{
-            // Mandando respuesta exitosa al bus.
-            template.convertAndSend("/topic/loginResponse", user);
+            // Mandando mensaje de error al bus.
+                template.convertAndSend("/topic/loginResponse/error/"+id, "Cuenta no encontrada");
         }
     }
 }

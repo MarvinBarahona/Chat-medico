@@ -17,8 +17,8 @@ const routes: Routes = [
       {
         path: 'activar',
         component: c.ActivarComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "enfermera"}
       }
     ]
   }

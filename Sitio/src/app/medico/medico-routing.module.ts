@@ -11,32 +11,32 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/medico/atender',
+        redirectTo: '/medico/chats',
         pathMatch: 'full'
       },
       {
         path: 'chats',
         component: c.AtenderComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "medico"}
       },
       {
         path: 'chats/:id',
         component: c.ChatComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "medico"}
       },
       {
         path: 'conversatorios',
         component: c.ConversatoriosComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "medico"}
       },
       {
         path: 'conversatorios/:id',
         component: c.ConversatorioComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "medico"}
       }
     ]
   }

@@ -5,13 +5,15 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.orm.jpa.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 @SpringBootApplication
+@EnableJpaRepositories("persistence")
+@EntityScan("models")
 public class Application implements WebApplicationInitializer {
 
     public static void main(String[] args) {
@@ -31,7 +33,5 @@ public class Application implements WebApplicationInitializer {
         servletRegistration.setAsyncSupported(true);
         servletRegistration.setLoadOnStartup(1);
         servletRegistration.addMapping("/");
-
-        //servletContext.addFilter("corsFilter", CorsFilter.class);
     }
 }

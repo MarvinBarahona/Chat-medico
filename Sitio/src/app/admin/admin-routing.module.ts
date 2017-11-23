@@ -17,38 +17,38 @@ const routes: Routes = [
       {
         path: 'preferencias',
         component: c.PreferenciasComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "admin"}
       },
       {
         path: 'conversatorios',
         component: c.ConversatoriosComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "admin"}
       },
       {
         path: 'usuarios',
         component: c.UsuariosComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "admin"}
       },
       {
         path: 'usuarios/nuevoMasivo',
         component: c.NuevoUsuarioMasivoComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "admin"}
       },
       {
         path: 'usuarios/nuevoIndividual',
         component: c.NuevoUsuarioIndividualComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "admin"}
       },
       {
         path: 'usuarios/:id',
         component: c.UsuarioComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "admin"}
       }
     ]
   }

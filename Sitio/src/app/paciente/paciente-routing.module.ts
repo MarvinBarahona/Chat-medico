@@ -17,26 +17,26 @@ const routes: Routes = [
       {
         path: 'chats',
         component: c.SolicitarComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "paciente"}
       },
       {
         path: 'chats/:id',
         component: c.ChatComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "paciente"}
       },
       {
         path: 'conversatorios',
         component: c.ConversatoriosComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "paciente"}
       },
       {
         path: 'conversatorios/:id',
         component: c.ConversatorioComponent,
-        // canActivate: [AppAuthGuard],
-        // data: {politica: 143}
+        canActivate: [AppAuthGuard],
+        data: {role: "paciente"}
       }
     ]
   }

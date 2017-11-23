@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
 import { StompService } from 'ng2-stomp-service';
 
-import { Usuario, Login } from './../clases';
+import { User, Login } from './../clases';
 
 declare var Materialize: any;
 
@@ -14,9 +14,9 @@ declare var Materialize: any;
 
 export class LoginComponent implements OnInit {
   login: Login;
-  returnUrl: string;
   errorMessage: string;
   message: string;
+  id: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
     private stomp: StompService
   ) {
     this.login = new Login();
+	
+	this.id = (new Date).getMilliseconds();
 
     // Configuración del cliente stomp.
     this.stomp.configure({
@@ -35,34 +37,34 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Captura el siguiente URL
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
-
     // Luego de conectarse.
     this.stomp.startConnect().then(() => {
       this.stomp.done('init');
 
       // Suscribirse a la respuesta exitosa.
-      this.stomp.subscribe('/topic/loginResponse',
-        (user: Usuario) => {
-          Materialize.toast(user.nombre, 3000, 'toastSuccess');
+      this.stomp.subscribe('/topic/loginResponse/'+this.id,
+        (user: User) => {
+          this.cookieService.putObject("user", user);
+		  this.stomp.disconnect();
+          this.router.navigate(["/"+user.role]);
         }
       );
 
       // Suscribirse a la respuesta fallida
-      this.stomp.subscribe('/topic/loginResponse/error',
+      this.stomp.subscribe('/topic/loginResponse/error/'+this.id,
         (e: string) => {
-          Materialize.toast(e, 3000, 'toastError');
+          this.message = null;
+          this.errorMessage = e;
         }
       );
     });
   }
 
   logueo() {
-    this.errorMessage = undefined;
+    this.errorMessage = null;
     this.message = "Iniciando sesión...";
 
     // Mandar mensaje al bus.
-    this.stomp.send('/app/login', this.login);
+    this.stomp.send('/app/login/'+this.id, this.login);
   }
 }

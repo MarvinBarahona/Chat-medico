@@ -1,11 +1,6 @@
-/*
-*Nombre del componente: app
-*Dirección física: src/app/app.component.ts
-*Objetivo: Componente principal
-**/
-
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import 'rxjs/add/operator/filter';
 
 import { CookieService } from 'ngx-cookie';
 
@@ -21,11 +16,16 @@ export class AppComponent {
 
   cerrarSesion() {
     this.cookieService.removeAll();
-    window.location.href = "./login";
+    this.router.navigate(["/login"]);
   }
 
-  ngOnInit(){
-    let u = this.cookieService.getObject('usuario');
-    if(u) this.usuario = u['nombre'];
+  ngOnInit() {
+    this.router.events
+      .filter(event => event instanceof NavigationEnd)
+      .subscribe((event) => {
+        let u = this.cookieService.getObject('user');
+        if (u) this.usuario = u['name'];
+		else this.usuario = null;
+      });
   }
 }

@@ -1,29 +1,30 @@
 package models;
 
 public class User {
-    String nombre; 
-    String apellido;
+    String name; 
+    String role;
 
     public User(){}
+
+    public User(String name, String role) {
+        this.name = name;
+        this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
     
-    public User(String nombre, String apellido) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
 }

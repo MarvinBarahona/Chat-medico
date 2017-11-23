@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
@@ -23,15 +24,15 @@ public class LoginController {
     
     ObjectMapper mapper = new ObjectMapper();
     
-    // Este mÃ©todo se ejecuta al mandar un mensaje a /app/login
-    @MessageMapping("/login")
-    public void login(LoginUser user) throws Exception {
-        // Obtener una sesiÃ³n de token. 
+    // Este método se ejecuta al mandar un mensaje a /app/login
+    @MessageMapping("/login/{id}")
+    public void login(LoginUser user, @DestinationVariable String id) throws Exception {
+        // Obtener una sesión de token. 
         StompClient stompClient = new StompClient();
         StompSession session = stompClient.connect(8090);
         
         // Suscribirse a la respuesta exitosa de la app.
-        session.subscribe("/topic/loginResponse", new StompFrameHandler() {
+        session.subscribe("/topic/loginResponse/"+id, new StompFrameHandler() {
 
             @Override
             public Type getPayloadType(StompHeaders sh) {return byte[].class;}
@@ -39,8 +40,8 @@ public class LoginController {
             @Override
             public void handleFrame(StompHeaders sh, Object o) {
                 try {
-                    User user = mapper.readValue(new String((byte[]) o), User.class);
-                    template.convertAndSend("/topic/loginResponse", user);
+                    User user = mapper.readValue(new String((byte[]) o, "UTF-8"), User.class);
+                    template.convertAndSend("/topic/loginResponse/"+id, user);
                     session.disconnect();
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
@@ -49,7 +50,7 @@ public class LoginController {
         });
         
         // Suscribirse a la respuesta fallida de la app.
-        session.subscribe("/topic/loginResponse/error", new StompFrameHandler() {
+        session.subscribe("/topic/loginResponse/error/"+id, new StompFrameHandler() {
 
             @Override
             public Type getPayloadType(StompHeaders sh) {return byte[].class;}
@@ -58,8 +59,8 @@ public class LoginController {
             public void handleFrame(StompHeaders sh, Object o){
                 try {
                     //Retorna mensaje de error al sitio.
-                    String error = mapper.readValue(new String((byte[]) o), String.class);
-                    template.convertAndSend("/topic/loginResponse/error", error);
+                    String error = mapper.readValue(new String((byte[]) o,"UTF-8"), String.class);
+                    template.convertAndSend("/topic/loginResponse/error/"+id, error);
                     session.disconnect();
                 } catch (IOException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,6 +71,6 @@ public class LoginController {
         
         // Mandar mensaje a la app. 
         String m = mapper.writeValueAsString(user);
-        session.send("/auth/login", m.getBytes());
+        session.send("/auth/login/"+id, m.getBytes());
     }
 }
