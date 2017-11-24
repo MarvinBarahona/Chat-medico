@@ -6,13 +6,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="cuentas")
+@Table(name="cuenta")
 public class LoginUser implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="cuenta_id")
     private long id;
     
     @Column(name="usuario")
@@ -21,11 +24,16 @@ public class LoginUser implements Serializable {
     @Column(name="contra")
     private String password;
     
-    @Column(name="rol")
-    private String role;
-    
     @Column(name="nombre")
     private String name;
+    
+    @ManyToOne
+    @JoinColumn(name="role_id")
+    private Role role;
+    
+    @ManyToOne
+    @JoinColumn(name="consultorio_id")
+    private Office office;
     
     public LoginUser() { }
 
@@ -33,7 +41,6 @@ public class LoginUser implements Serializable {
         this.username = username;
         this.name = name;
         this.password = password;
-        this.role = role;
     }
 
     public long getId() {
@@ -62,13 +69,23 @@ public class LoginUser implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
+    }   
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
-    }    
+    }
+
+    public Office getOffice() {
+        return office;
+    }
+
+    public void setOffice(Office office) {
+        this.office = office;
+    }
+    
+    
 }

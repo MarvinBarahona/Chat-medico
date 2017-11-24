@@ -25,7 +25,7 @@ public class LoginController {
         
         if(databaseUser != null){
             if(databaseUser.getPassword().equals(loginUser.getPassword())){
-                User user = new User(databaseUser.getName(), databaseUser.getRole());
+                User user = new User(databaseUser.getName(), databaseUser.getRole().getName(), databaseUser.getOffice().getName(), databaseUser.getOffice().getSchema());
                 // Mandando respuesta exitosa al bus.
                 template.convertAndSend("/topic/loginResponse/"+id, user);
             }
