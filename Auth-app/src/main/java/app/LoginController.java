@@ -2,6 +2,7 @@ package app;
 
 import models.LoginUser;
 import models.User;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -18,20 +19,20 @@ public class LoginController {
     @Autowired
     private LoginUserRepository repository;
 
-    // Este método se ejecuta al mandar un mensaje a /auth/login
+    // Este mï¿½todo se ejecuta al mandar un mensaje a /auth/login
     @MessageMapping("/login/{id}")
     public void login(LoginUser loginUser, @DestinationVariable String id) throws Exception {
         LoginUser databaseUser = repository.findByUsername(loginUser.getUsername());
         
-        if(databaseUser != null){
-            if(databaseUser.getPassword().equals(loginUser.getPassword())){
+        if(databaseUser != null){            
+            if(BCrypt.checkpw(loginUser.getPassword(), databaseUser.getPassword())){
                 User user = new User(databaseUser.getName(), databaseUser.getRole().getName(), databaseUser.getOffice().getName(), databaseUser.getOffice().getSchema());
                 // Mandando respuesta exitosa al bus.
                 template.convertAndSend("/topic/loginResponse/"+id, user);
             }
             else{
                 // Mandando mensaje de error al bus.
-                template.convertAndSend("/topic/loginResponse/error/"+id, "Contraseña equivocada");
+                template.convertAndSend("/topic/loginResponse/error/"+id, "ContraseÃ±a equivocada");
             }
         }
         else{

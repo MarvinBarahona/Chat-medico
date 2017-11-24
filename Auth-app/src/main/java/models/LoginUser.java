@@ -28,7 +28,7 @@ public class LoginUser implements Serializable {
     private String name;
     
     @ManyToOne
-    @JoinColumn(name="role_id")
+    @JoinColumn(name="rol_id")
     private Role role;
     
     @ManyToOne
