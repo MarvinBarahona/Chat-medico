@@ -2,22 +2,22 @@ package pojo;
 
 public class Message {
 
-    private String token;
+    private User user;
     private Object object;
 
-    public Message(String token, Object object) {
-        this.token = token;
+    public Message(User user, Object object) {
+        this.user = user;
         this.object = object;
     }
 
     public Message() {}
 
-    public String getToken() {
-        return token;
+    public User getUser() {
+        return user;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Object getObject() {
@@ -26,8 +26,5 @@ public class Message {
 
     public void setObject(Object object) {
         this.object = object;
-    }
-    
-    
-   
+    }   
 }

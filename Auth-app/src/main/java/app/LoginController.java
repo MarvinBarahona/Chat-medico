@@ -26,7 +26,7 @@ public class LoginController {
         
         if(databaseUser != null){            
             if(BCrypt.checkpw(loginUser.getPassword(), databaseUser.getPassword())){
-                User user = new User(databaseUser.getName(), databaseUser.getRole().getName(), databaseUser.getOffice().getName(), databaseUser.getOffice().getSchema());
+                User user = new User(databaseUser.getId(), databaseUser.getName(), databaseUser.getRole().getName(), databaseUser.getOffice().getName(), databaseUser.getOffice().getSchema());
                 // Mandando respuesta exitosa al bus.
                 template.convertAndSend("/topic/loginResponse/"+id, user);
             }

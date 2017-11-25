@@ -1,18 +1,28 @@
 package pojo;
 
 public class User {
-    String name; 
-    String role;
-    String officeName;
-    String schema;
+    private long id;
+    private String name; 
+    private String role;
+    private String officeName;
+    private String schema;
 
     public User(){}
 
-    public User(String name, String role, String officeName, String schema) {
+    public User(long id, String name, String role, String officeName, String schema) {
+        this.id = id;
         this.name = name;
         this.role = role;
         this.officeName = officeName;
         this.schema = schema;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

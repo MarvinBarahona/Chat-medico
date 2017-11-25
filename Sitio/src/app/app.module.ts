@@ -8,12 +8,14 @@ import { CookieModule } from 'ngx-cookie';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { StompService } from 'ng2-stomp-service';
 
 import { AdminModule } from './admin/admin.module';
 import { EnfermeraModule } from './enfermera/enfermera.module';
 import { PacienteModule } from './paciente/paciente.module';
 import { MedicoModule } from './medico/medico.module';
 import { LoginModule } from './login';
+import { MyStompService } from './stompService/';
 
 @NgModule({
   imports: [
@@ -32,7 +34,7 @@ import { LoginModule } from './login';
   declarations: [
     AppComponent
   ],
-  providers: [],
+  providers: [StompService, MyStompService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

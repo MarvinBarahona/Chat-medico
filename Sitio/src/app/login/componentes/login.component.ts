@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { CookieService } from 'ngx-cookie';
-import { StompService } from 'ng2-stomp-service';
 
+import { MyStompService } from './../../stompService/';
 import { User, Login } from './../clases';
 
 declare var Materialize: any;
@@ -12,52 +12,41 @@ declare var Materialize: any;
   templateUrl: './login.component.html'
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   login: Login;
   errorMessage: string;
   message: string;
   id: number;
+  subscriptions: any[];
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private cookieService: CookieService,
-    private stomp: StompService
+    private stompService: MyStompService
   ) {
     this.login = new Login();
-	
-	this.id = (new Date).getMilliseconds();
-
-    // Configuración del cliente stomp.
-    this.stomp.configure({
-      host: 'http://localhost:8080/hello',
-      debug: false,
-      queue: { 'init': false }
-    });
+    this.id = (new Date).getMilliseconds();
+    this.subscriptions = [];
   }
 
   ngOnInit() {
-    // Luego de conectarse.
-    this.stomp.startConnect().then(() => {
-      this.stomp.done('init');
-
-      // Suscribirse a la respuesta exitosa.
-      this.stomp.subscribe('/topic/loginResponse/'+this.id,
-        (user: User) => {
+    setTimeout(()=>{
+      this.subscriptions.push(
+        this.stompService.getStomp().subscribe('/topic/loginResponse/'+this.id,(user: User) => {
           this.cookieService.putObject("user", user);
-		  this.stomp.disconnect();
           this.router.navigate(["/"+user.role]);
-        }
-      );
+      }));
 
-      // Suscribirse a la respuesta fallida
-      this.stomp.subscribe('/topic/loginResponse/error/'+this.id,
-        (e: string) => {
+      this.subscriptions.push(
+        this.stompService.getStomp().subscribe('/topic/loginResponse/error/'+this.id,(e: string) => {
           this.message = null;
           this.errorMessage = e;
-        }
-      );
-    });
+      }));
+    }, 500)
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach((sub)=>{sub.unsubscribe();});
   }
 
   logueo() {
@@ -65,6 +54,8 @@ export class LoginComponent implements OnInit {
     this.message = "Iniciando sesión...";
 
     // Mandar mensaje al bus.
-    this.stomp.send('/app/login/'+this.id, this.login);
+    this.stompService.send('/app/login/'+this.id, this.login);
   }
+
+
 }

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { CookieModule } from 'ngx-cookie';
-import { StompService } from 'ng2-stomp-service';
 
 import { LoginRoutingModule } from './login-routing.module';
 import * as c from './componentes';
@@ -23,6 +22,6 @@ import * as c from './componentes';
     c.NotFoundComponent,
     c.NotAllowedComponent
   ],
-  providers: [StompService]
+  providers: []
 })
 export class LoginModule { }
