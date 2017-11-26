@@ -9,14 +9,11 @@ import { MyStompService } from './../../stompService/';
 })
 
 export class SolicitarComponent{
-  id: number;
-
-  constructor(private router: Router, private stompService: MyStompService) {
-    this.id = (new Date).getMilliseconds();
-  }
+  constructor(private router: Router, private stompService: MyStompService) {}
 
   solicitar(){
-    this.stompService.sendWithUser("/app/chat/"+this.id,"Conectado");
-    this.router.navigate(['/paciente/chats/'+this.id]);
+    let user = this.stompService.getUser();
+    this.stompService.sendWithUser("/app/addChat/"+user.id,user.name);
+    this.router.navigate(['/paciente/chats/'+user.id]);
   }
 }

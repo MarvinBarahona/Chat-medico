@@ -24,10 +24,10 @@ public class LoginController {
     
     ObjectMapper mapper = new ObjectMapper();
     
-    // Este método se ejecuta al mandar un mensaje a /app/login
+    // Este mÃ©todo se ejecuta al mandar un mensaje a /app/login
     @MessageMapping("/login/{id}")
     public void login(LoginUser user, @DestinationVariable String id) throws Exception {
-        // Obtener una sesión de token. 
+        // Obtener una sesiï¿½n de token. 
         StompClient stompClient = new StompClient();
         StompSession session = stompClient.connect(8090);
         

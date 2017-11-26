@@ -1,1 +1,19 @@
-<p>Chat</p>
+<div class="card-panel">
+
+  <div class="row">
+    <div class="input-field col s9">
+      <input id="mensaje" name="message" type="text" [(ngModel)]="message">
+      <label for="mensaje">Enviar mensaje...</label>
+    </div>
+    <div class="col s2 offset-s1">
+      <button class="btn" [disabled]="!message" (click)="enviar()">Enviar</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s10" *ngFor="let message of messages" [class.my-message]="message.sender == myName">
+      <p><strong>{{message.sender}}</strong></p>
+      <p>{{message.message}}</p>
+    </div>
+  </div>
+</div>

@@ -19,7 +19,7 @@ public class LoginController {
     @Autowired
     private LoginUserRepository repository;
 
-    // Este m�todo se ejecuta al mandar un mensaje a /auth/login
+    // Este método se ejecuta al mandar un mensaje a /auth/login
     @MessageMapping("/login/{id}")
     public void login(LoginUser loginUser, @DestinationVariable String id) throws Exception {
         LoginUser databaseUser = repository.findByUsername(loginUser.getUsername());
@@ -37,7 +37,7 @@ public class LoginController {
         }
         else{
             // Mandando mensaje de error al bus.
-                template.convertAndSend("/topic/loginResponse/error/"+id, "Cuenta no encontrada");
+            template.convertAndSend("/topic/loginResponse/error/"+id, "Cuenta no encontrada");
         }
     }
 }

@@ -23,10 +23,6 @@ export class AppComponent implements OnInit, OnDestroy {
         if (u) this.usuario = u['name'];
         else this.usuario = null;
     });
-
-    this.stompService.getStomp().startConnect().then(() => {
-      this.stompService.getStomp().done('init');
-    });
   }
 
   cerrarSesion() {

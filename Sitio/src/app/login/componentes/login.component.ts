@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.message = null;
           this.errorMessage = e;
       }));
-    }, 500)
+    }, 1000)
   }
 
   ngOnDestroy(){

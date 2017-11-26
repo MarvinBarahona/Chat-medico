@@ -3,30 +3,40 @@ package pojo;
 import java.util.Date;
 
 public class Chat {
-    private int id;
-    private String patient;
+    private String id;
+    private String state;
+    private String name;
     private Date waitingSince;
 
-    public Chat(int id, String patient, Date waitingSince) {
+    public Chat(String id, String name, Date waitingSince) {
         this.id = id;
-        this.patient = patient;
+        this.state = "Pendiente";
+        this.name = name;
         this.waitingSince = waitingSince;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getPatient() {
-        return patient;
+    public String getState() {
+        return state;
     }
 
-    public void setPatient(String patient) {
-        this.patient = patient;
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getWaitingSince() {
@@ -37,5 +47,7 @@ public class Chat {
         this.waitingSince = waitingSince;
     }
     
-    
+    public String ToString(){
+        return String.format("Chat %1$s de %2$s está %3$s", this.id, this.name, this.state);
+    }
 }
