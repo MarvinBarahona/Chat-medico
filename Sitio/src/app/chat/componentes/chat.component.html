@@ -1,8 +1,7 @@
 <div class="card-panel">
-
   <div class="row">
-    <div class="input-field col s9">
-      <input id="mensaje" name="message" type="text" [(ngModel)]="message">
+    <div class="input-field col s8">
+      <input id="mensaje" name="message" type="text" [(ngModel)]="message" (keyup.enter)="enviar()">
       <label for="mensaje">Enviar mensaje...</label>
     </div>
     <div class="col s2 offset-s1">
@@ -10,10 +9,17 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col s10" *ngFor="let message of messages" [class.my-message]="message.sender == myName">
-      <p><strong>{{message.sender}}</strong></p>
-      <p>{{message.message}}</p>
+  <div class="row" id="chat">
+    <div class="col s10" *ngFor="let message of messages" [class.right]="message.sender == myName" [class.offset-s1]="message.sender == 'system'" [class.center]="message.sender == 'system'">
+      <span *ngIf="message.sender != 'system'">
+        <strong>{{message.sender}}</strong><br>
+        {{message.message}}
+      </span>
+	  
+	  <span *ngIf="message.sender=='system'">
+		<strong>** {{message.message}} **</strong>
+	  </span>
+	  
     </div>
   </div>
 </div>

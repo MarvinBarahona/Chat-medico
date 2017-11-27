@@ -1,5 +1,5 @@
 <!-- Side nav -->
-<ul class="side-nav fixed">
+<ul id="slide-out" class="side-nav fixed">
   <li routerLinkActive="active">
     <a routerLink="/paciente/chats">Solicitar consulta</a>
   </li>
@@ -16,10 +16,10 @@
   </div>
 
   <div class="row">
-    <div class="col l8">
+    <div class="col l8 s12">
       <router-outlet></router-outlet>
     </div>
-    <div class="col l4">
+    <div class="col l4 s12">
       <recordatorios></recordatorios>
     </div>
   </div>

@@ -85,7 +85,7 @@ public class ChatRepositoryController {
     @MessageMapping("/getChats/{id}")
     @SendTo("/topic/getChatsResponse/{id}")
     public ArrayList<Chat> getChats(Message message){
-        System.out.println("Agregando chat");
+        System.out.println("Retornando chats");
         User user = message.getUser();
         
         if(!offices.containsKey(user.getSchema())){

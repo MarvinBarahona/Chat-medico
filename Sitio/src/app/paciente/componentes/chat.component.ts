@@ -5,6 +5,7 @@ import { MyStompService } from './../../stompService/';
 
 @Component({
   templateUrl: './chat.component.html',
+  host: {'(window:beforeunload)':'ngOnDestroy()'},
   styles: []
 })
 
@@ -14,9 +15,8 @@ export class ChatComponent{
   constructor(private router: Router, private route: ActivatedRoute, private stompService: MyStompService) {
     this.id = this.route.snapshot.params['id'];
   }
-  
+
   ngOnDestroy(){
-    this.stompService.sendWithUser('/app/removeChat/'+this.id, "Abandonar");
-	this.stompService.sendWithUser('/app/leaveChat/'+this.id, "Abandonar");
+    this.stompService.sendWithUser('/app/removeChat/'+this.id, "Remover");
   }
 }

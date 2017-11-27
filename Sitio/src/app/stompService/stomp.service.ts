@@ -9,12 +9,12 @@ import { Message } from './';
 export class MyStompService{
 
   constructor(private stomp: StompService, private cookieService: CookieService){
-    // Configuración del cliente stomp.
+    //Configuración del cliente stomp.
     this.stomp.configure({
       host: 'http://localhost:8080/hello',
       debug: true,
       queue: { 'init': false }
-    });	
+    });
 
     this.stomp.startConnect().then(() => {
       this.stomp.done('init');
