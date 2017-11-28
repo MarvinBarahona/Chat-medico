@@ -21,13 +21,15 @@
       "../node_modules/font-awesome/css/font-awesome.css",
       "../node_modules/datatables.net-dt/css/jquery.dataTables.css",
       "../node_modules/materialize-css/dist/css/materialize.css",
+      "../node_modules/jquery-timepicker/jquery.timepicker.css",
       "styles.css"
     ],
     "scripts": [
       "../node_modules/jquery/dist/jquery.js",
       "../node_modules/hammerjs/hammer.js",
       "../node_modules/materialize-css/dist/js/materialize.js",
-      "../node_modules/datatables.net/js/jquery.dataTables.js"
+      "../node_modules/datatables.net/js/jquery.dataTables.js",
+      "../node_modules/jquery-timepicker/jquery.timepicker.js"
     ],
     "environmentSource": "environments/environment.ts",
     "environments": {

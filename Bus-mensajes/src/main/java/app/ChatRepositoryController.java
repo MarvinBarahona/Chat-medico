@@ -30,7 +30,7 @@ public class ChatRepositoryController {
     
     @MessageMapping("/addChat/{id}")
     public void addChat(Message message, @DestinationVariable String id){
-        System.out.println("Agregando chat");
+        System.out.println("Adding chat");
         User user = message.getUser();
         Chat chat = new Chat(id, String.valueOf(message.getObject()), new Date());
         
@@ -48,7 +48,7 @@ public class ChatRepositoryController {
     
     @MessageMapping("/startChat/{id}")
     public void startChat(Message message, @DestinationVariable String id){
-        System.out.println("Empezando chat");
+        System.out.println("Starting chat");
         User user = message.getUser();
         
         HashMap<String, Chat> officeChats = offices.get(user.getSchema());
@@ -60,7 +60,7 @@ public class ChatRepositoryController {
     
     @MessageMapping("/endChat/{id}")
     public void endChat(Message message, @DestinationVariable String id){
-        System.out.println("Terminando chat");
+        System.out.println("Ending chat");
         User user = message.getUser();
         
         HashMap<String, Chat> officeChats = offices.get(user.getSchema());
@@ -74,7 +74,7 @@ public class ChatRepositoryController {
     
     @MessageMapping("/removeChat/{id}")
     public void removeChat(Message message){
-        System.out.println("Eliminando chat");
+        System.out.println("Deleting chat");
         User user = message.getUser();
         HashMap<String, Chat> officeChats = offices.get(user.getSchema());
         officeChats.remove(String.valueOf(user.getId()));
@@ -85,7 +85,7 @@ public class ChatRepositoryController {
     @MessageMapping("/getChats/{id}")
     @SendTo("/topic/getChatsResponse/{id}")
     public ArrayList<Chat> getChats(Message message){
-        System.out.println("Retornando chats");
+        System.out.println("Getting chats");
         User user = message.getUser();
         
         if(!offices.containsKey(user.getSchema())){

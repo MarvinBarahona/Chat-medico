@@ -28,10 +28,10 @@ public class ConferenceController {
     
     @MessageMapping("/newConference/{id}")
     public void newConference(Message message, @DestinationVariable String id) throws Exception {
+        System.out.println("Saving conference");
         User user = message.getUser();
         Conference conference = mapper.convertValue(message.getObject(), Conference.class);
         conference.setSchema(user.getSchema());
-        System.out.println(conference.getDate().toString() + conference.getTopic() + conference.getSchema());
         
         StompClient stompClient = new StompClient();
         StompSession session = stompClient.connect(8100);
@@ -44,6 +44,7 @@ public class ConferenceController {
 
             @Override
             public void handleFrame(StompHeaders sh, Object o) {
+                System.out.println("Sending conference");
                 try {
                     Conference conference = mapper.readValue(new String((byte[]) o, "UTF-8"), Conference.class);
                     template.convertAndSend("/topic/addConference/"+conference.getSchema(), conference);
@@ -61,24 +62,23 @@ public class ConferenceController {
     
     @MessageMapping("/getConferences/{id}")
     public void getConferences(Message message, @DestinationVariable String id) throws Exception {
-        System.out.println("getting");
+        System.out.println("Getting conferences");
         User user = message.getUser();
         
         StompClient stompClient = new StompClient();
         StompSession session = stompClient.connect(8100);
         
         // Suscribirse a la respuesta exitosa de la app.
-        session.subscribe("/topic/newConferenceResponse/"+id, new StompFrameHandler() {
+        session.subscribe("/topic/getConferencesResponse/"+id, new StompFrameHandler() {
 
             @Override
             public Type getPayloadType(StompHeaders sh) {return byte[].class;}
 
             @Override
             public void handleFrame(StompHeaders sh, Object o) {
-                System.out.println("rc");
                 try {
+                    System.out.println("Sending conferences");
                     List<Conference> conferences = mapper.readValue(new String((byte[]) o, "UTF-8"), new TypeReference<List<Conference>>(){});
-                    System.out.println("sd");
                     template.convertAndSend("/topic/getConferencesResponse/"+id, conferences.toArray());
                     session.disconnect();
                 } catch (IOException ex) {
@@ -89,14 +89,13 @@ public class ConferenceController {
         
         // Mandar mensaje a la app. 
         String m = mapper.writeValueAsString(user.getSchema());
-        System.out.println("sending");
         session.send("/mongo/getConferences/"+id, m.getBytes());
     }
     
     @MessageMapping("/removeConference/{id}")
     public void removeConference(Message message, @DestinationVariable String id) throws Exception {
-        User user = message.getUser();
-        Conference conference = mapper.readValue(new String((byte[]) message.getObject(), "UTF-8"), Conference.class);
+        System.out.println("Deleting conference");
+        Conference conference = mapper.convertValue(message.getObject(), Conference.class);
         
         StompClient stompClient = new StompClient();
         StompSession session = stompClient.connect(8100);

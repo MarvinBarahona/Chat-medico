@@ -27,6 +27,7 @@ public class LoginController {
     // Este método se ejecuta al mandar un mensaje a /app/login
     @MessageMapping("/login/{id}")
     public void login(LoginUser user, @DestinationVariable String id) throws Exception {
+        System.out.println("Login attemp " + id);
         // Obtener una sesión de token. 
         StompClient stompClient = new StompClient();
         StompSession session = stompClient.connect(8090);
@@ -40,6 +41,7 @@ public class LoginController {
             @Override
             public void handleFrame(StompHeaders sh, Object o) {
                 try {
+                    System.out.println("Login success " + id);
                     User user = mapper.readValue(new String((byte[]) o, "UTF-8"), User.class);
                     template.convertAndSend("/topic/loginResponse/"+id, user);
                     session.disconnect();
@@ -57,6 +59,7 @@ public class LoginController {
 
             @Override
             public void handleFrame(StompHeaders sh, Object o){
+                System.out.println("Login error " + id);
                 try {
                     //Retorna mensaje de error al sitio.
                     String error = mapper.readValue(new String((byte[]) o,"UTF-8"), String.class);

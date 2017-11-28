@@ -6,6 +6,8 @@ import { DatepickerOptions } from 'ng2-datepicker';
 import { MyStompService } from './../../stompService/';
 import { Conference } from './../../chat/';
 
+declare var $: any;
+
 @Component({
   templateUrl: './conversatorios.component.html',
   styles: []
@@ -19,6 +21,8 @@ export class ConversatoriosComponent implements OnInit, OnDestroy {
   subscriptions: any[];
   id: number;
   schema: string;
+  time: string;
+  t: boolean;
 
   constructor(private router: Router, private stompService: MyStompService) {
     this.dpOptions = {
@@ -29,15 +33,25 @@ export class ConversatoriosComponent implements OnInit, OnDestroy {
     }
 
     this.newConference = new Conference;
-	this.newConference.date = new Date;
+	  this.newConference.date = new Date;
     this.conferences = [];
 
     this.subscriptions = [];
     this.id = this.stompService.getUser().id;
     this.schema = this.stompService.getUser().schema;
+
+    this.t = true;
   }
 
   ngOnInit() {
+    $('input.timepicker').timepicker({
+      timeFormat: 'HH:mm',
+      change: (time: Date) => { this.time = time.getHours() + ":00";},
+      interval: 60,
+      minHour: 7,
+      maxHour: 21
+    });
+
     setTimeout(() => {
       this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/getConferencesResponse/' + this.id, (conferences: Conference[]) => {
         this.conferences = conferences;
@@ -46,6 +60,8 @@ export class ConversatoriosComponent implements OnInit, OnDestroy {
       this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/addConference/' + this.schema, (conference: Conference) => {
         this.conferences.push(conference);
         this.newConference = new Conference;
+        this.newConference.date = new Date;
+        this.time = "";
       }));
 
       this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/removeConference/' + this.schema, (conference: Conference) => {
@@ -61,6 +77,9 @@ export class ConversatoriosComponent implements OnInit, OnDestroy {
   }
 
   guardar(){
+    let i = this.time.indexOf(":");
+    let t = this.time.slice(0, i);
+    this.newConference.date.setHours(Number.parseInt(t));
     this.stompService.sendWithUser("/app/newConference/"+this.id, this.newConference);
   }
 
