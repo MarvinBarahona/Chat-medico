@@ -1,1 +1,45 @@
-<p>Conversatorios</p>
+<div class="row">
+  <div class="col l6 s12">
+    <div class="card-panel">
+      <form #conversatorioForm="ngForm" autocomplete="off" (submit)="guardar()">
+
+        <div class="row">
+          <div class="input-field col s10 offset-s1">
+            <input id="topic" name="topic" type="text" class="validate" maxlength="60" [(ngModel)]="newConference.topic" required>
+            <label for="topic">Tema</label>
+          </div>
+
+          <div class="input-field col s10 offset-s1">
+            <ng-datepicker name="date" [(ngModel)]="newConference.date" [options]="dpOptions"></ng-datepicker>
+            <label for="date" class="active">Tema</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <button type="submit" class="btn s4" [disabled]="!conversatorioForm.form.valid || !newConference.date">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="col l6 s12">
+    <div class="card-panel">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Tema</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let conference of conferences">
+            <th>{{conference.date | date:'dd/MM/yy'}}</th>
+            <th>{{conference.topic}}</th>
+            <th><button class="btn" click="eliminar(conference.id)"><i class="material-icons borrar">delete</i></button></th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

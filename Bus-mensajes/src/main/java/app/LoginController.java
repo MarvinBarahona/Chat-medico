@@ -27,7 +27,7 @@ public class LoginController {
     // Este método se ejecuta al mandar un mensaje a /app/login
     @MessageMapping("/login/{id}")
     public void login(LoginUser user, @DestinationVariable String id) throws Exception {
-        // Obtener una sesi�n de token. 
+        // Obtener una sesión de token. 
         StompClient stompClient = new StompClient();
         StompSession session = stompClient.connect(8090);
         

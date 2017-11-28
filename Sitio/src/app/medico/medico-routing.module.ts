@@ -27,12 +27,6 @@ const routes: Routes = [
         data: {role: "medico"}
       },
       {
-        path: 'conversatorios',
-        component: c.ConversatoriosComponent,
-        canActivate: [AppAuthGuard],
-        data: {role: "medico"}
-      },
-      {
         path: 'conversatorios/:id',
         component: c.ConversatorioComponent,
         canActivate: [AppAuthGuard],

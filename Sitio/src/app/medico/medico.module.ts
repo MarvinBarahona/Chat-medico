@@ -27,7 +27,6 @@ import { ChatModule } from './../chat';
     c.ChatComponent,
     c.FichaComponent,
     c.HistorialComponent,
-    c.ConversatoriosComponent,
     c.ConversatorioComponent
   ],
   providers: []

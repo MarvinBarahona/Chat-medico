@@ -17,10 +17,10 @@ export class AtenderComponent implements OnInit, OnDestroy {
   subscriptions: any[];
 
   constructor(private router: Router, private stompService: MyStompService) {
-    this.id = (new Date).getMilliseconds();
+    this.id = this.stompService.getUser().id;
     this.subscriptions = [];
     this.schema = this.stompService.getUser().schema;
-	this.chats = [];
+	  this.chats = [];
   }
 
   ngOnInit() {
