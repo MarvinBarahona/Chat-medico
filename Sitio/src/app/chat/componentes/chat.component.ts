@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { MyStompService } from './../../stompService/';
-
 import { ChatMessage } from './../clases/';
 
 declare var $: any;
@@ -10,7 +9,7 @@ declare var $: any;
 @Component({
   selector: 'chat',
   templateUrl: './chat.component.html',
-  host: {'(window:beforeunload)':'abandonar()'},
+  host: { '(window:beforeunload)': 'abandonar()' },
   styles: [`
     #chat{
       height: 350px;
@@ -39,31 +38,31 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    setTimeout(()=>{
-      this.sub = this.stompService.getStomp().subscribe('/topic/chat/'+this.id, (message: ChatMessage) => {
-		this.messages.push(message);
-		setTimeout(()=>{
-			$('#chat').scrollTop($('#chat').prop("scrollHeight"));
-		}, 100);
+    setTimeout(() => {
+      this.sub = this.stompService.getStomp().subscribe('/topic/chat/' + this.id, (message: ChatMessage) => {
+        this.messages.push(message);
+        setTimeout(() => {
+          $('#chat').scrollTop($('#chat').prop("scrollHeight"));
+        }, 100);
       });
 
-      this.stompService.sendWithUser("/app/joinChat/"+this.id, "Unirse");
+      this.stompService.sendWithUser("/app/joinChat/" + this.id, "Unirse");
     }, 1000);
   }
 
-  ngOnDestroy(){
-	  this.sub.unsubscribe();
-	  this.stompService.sendWithUser('/app/leaveChat/'+this.id, "Abandonar");
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+    this.stompService.sendWithUser('/app/leaveChat/' + this.id, "Abandonar");
   }
 
-  enviar(){
-    if(this.message != null && this.message != ""){
-      this.stompService.sendWithUser("/app/chat/"+this.id, this.message);
+  enviar() {
+    if (this.message != null && this.message != "") {
+      this.stompService.sendWithUser("/app/chat/" + this.id, this.message);
       this.message = "";
     }
   }
-  
-  abandonar(){
-	this.stompService.sendWithUser('/app/leaveChat/'+this.id, "Abandonar");
+
+  abandonar() {
+    this.stompService.sendWithUser('/app/leaveChat/' + this.id, "Abandonar");
   }
 }

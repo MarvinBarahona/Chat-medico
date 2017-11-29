@@ -22,7 +22,6 @@ export class ConversatoriosComponent implements OnInit, OnDestroy {
   id: number;
   schema: string;
   time: string;
-  t: boolean;
 
   constructor(private router: Router, private stompService: MyStompService) {
     this.dpOptions = {
@@ -39,8 +38,6 @@ export class ConversatoriosComponent implements OnInit, OnDestroy {
     this.subscriptions = [];
     this.id = this.stompService.getUser().id;
     this.schema = this.stompService.getUser().schema;
-
-    this.t = true;
   }
 
   ngOnInit() {
