@@ -56,7 +56,13 @@ export class RecordatoriosComponent implements OnInit, OnDestroy {
       });
 
       this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/addStartedChat/' + this.schema, (chat: Chat) => {
-        this.chats.push(chat);
+        let chatInArray = this.chats.find((_chat)=>{return _chat.id == chat.id});
+        if(!chatInArray){
+          this.chats.push(chat);
+        }
+        else{
+          chatInArray.state = chat.state;
+        }
       }));
 
       this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/removeStartedChat/' + this.schema, (chat: Chat) => {

@@ -11,7 +11,8 @@
   </thead>
   <tbody *ngIf="chats">
     <tr *ngFor="let chat of chats">
-      <td><a [routerLink]="['/medico/chats/'+chat.id]">{{chat.name}}</a></td>
+      <td *ngIf="chat.id.length < 10"><a [routerLink]="['/medico/chats/'+chat.id]">{{chat.name}}</a></td>
+	  <td *ngIf="chat.id.length >= 10"><a [routerLink]="['/medico/conversatorios/'+chat.id]">{{chat.name}}</a></td>
       <td>{{chat.waitingSince | date:'dd/MM/yy hh:mm'}}</td>
       <td>{{chat.state}}</td>
     </tr>
