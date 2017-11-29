@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MyStompService } from './../../stompService/';
-import { Conference } from './../clases/';
+import { Conference, chat } from './../clases/';
 
 declare var $: any;
 
@@ -12,8 +12,10 @@ declare var $: any;
   styles: []
 })
 
-export class RecordatoriosComponent implements OnInit {
+export class RecordatoriosComponent implements OnInit, OnDestroy {
   conferences: Conference[];
+  chats: Chat[];
+
   subscriptions: any[];
   id: number;
   schema: string;
@@ -21,6 +23,7 @@ export class RecordatoriosComponent implements OnInit {
 
   constructor(private router: Router, private stompService: MyStompService) {
     this.conferences = [];
+    this.chats = [];
 
     this.subscriptions = [];
     this.id = this.stompService.getUser().id;
@@ -30,9 +33,10 @@ export class RecordatoriosComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/getConferencesResponse/' + this.id, (conferences: Conference[]) => {
+      let subConferences = this.stompService.getStomp().subscribe('/topic/getConferencesResponse/' + this.id, (conferences: Conference[]) => {
         this.conferences = conferences;
-      }));
+        subConferences.unsubscribe();
+      });
 
       this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/addConference/' + this.schema, (conference: Conference) => {
         this.conferences.push(conference);
@@ -46,11 +50,33 @@ export class RecordatoriosComponent implements OnInit {
         }
       }));
 
+      let subChats = this.stompService.getStomp().subscribe('/topic/getStartedChatsResponse/' + this.id, (chats: Chat[]) => {
+        this.chats = chats;
+        subChats.unsubscribe();
+      });
+
+      this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/addStartedChat/' + this.schema, (chat: Chat) => {
+        this.chats.push(chat);
+      }));
+
+      this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/removeStartedChat/' + this.schema, (chat: Chat) => {
+        let chatInArray = this.chats.find((_chat) => { return _chat.id == chat.id });
+        if (chatInArray) {
+          let i = this.chats.indexOf(chatInArray);
+          this.chats.splice(i, 1);
+        }
+      }));
+
       this.stompService.sendWithUser("/app/getConferences/" + this.id, "Conectado");
+      this.stompService.sendWithUser("/app/getStartedChats/" + this.id, "Conectado");
     }, 2000);
   }
 
   goToConference(id: string){
     this.router.navigate(['/'+this.role+'/chats/'+id]);
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach((sub)=>{sub.unsubscribe();});
   }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MaterializeDirective, MaterializeAction } from "angular2-materialize";
 
-
 import { MyStompService } from './../../stompService/';
 
 @Component({
@@ -32,6 +31,7 @@ export class ChatComponent implements OnInit{
   openFicha() {
     this.modalFicha.emit({ action: "modal", params: ['open'] });
   }
+
   closeFicha() {
     this.modalFicha.emit({ action: "modal", params: ['close'] });
   }

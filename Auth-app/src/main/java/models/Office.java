@@ -19,14 +19,18 @@ public class Office implements Serializable {
     @Column(name="nombre")
     private String name;
     
+    @Column(name="ubicacion")
+    private String address;
+    
     @Column(name="esquema")
     private String schema;
 
     public Office() {
     }
 
-    public Office(String name, String schema) {
+    public Office(String name, String address, String schema) {
         this.name = name;
+        this.address = address;
         this.schema = schema;
     }
 
@@ -42,6 +46,14 @@ public class Office implements Serializable {
         this.name = name;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
     public String getSchema() {
         return schema;
     }

@@ -43,7 +43,7 @@ public class ChatRepositoryController {
         officeChats.put(chat.getId(), chat);
         
         template.convertAndSend("/topic/addChat/"+user.getSchema(), chat);
-        if(id.length() > 10) template.convertAndSend("/topic/addConversatory/"+user.getSchema(), chat);
+        if(id.length() > 10) template.convertAndSend("/topic/addStartedConference/"+user.getSchema(), chat);
     }
     
     @MessageMapping("/startChat/{id}")
@@ -73,13 +73,14 @@ public class ChatRepositoryController {
     }
     
     @MessageMapping("/removeChat/{id}")
-    public void removeChat(Message message){
+    public void removeChat(Message message, @DestinationVariable String id){
         System.out.println("Deleting chat");
         User user = message.getUser();
         HashMap<String, Chat> officeChats = offices.get(user.getSchema());
-        officeChats.remove(String.valueOf(user.getId()));
+        Chat chat = officeChats.remove(id);
         
-        template.convertAndSend("/topic/removeChat/"+user.getSchema(), user.getId());
+        template.convertAndSend("/topic/removeChat/"+user.getSchema(), chat);
+        if(id.length() > 10) template.convertAndSend("/topic/removeStartedConference/"+user.getSchema(), chat);
     }
 
     @MessageMapping("/getChats/{id}")
@@ -94,4 +95,39 @@ public class ChatRepositoryController {
         
         return new ArrayList<>(offices.get(user.getSchema()).values());
     }   
+    
+    @MessageMapping("/getStartedChats/{id}")
+    @SendTo("/topic/getStartedChatsResponse/{id}")
+    public ArrayList<Chat> getStartedChats(Message message){
+        System.out.println("Getting started chats");
+        User user = message.getUser();
+        
+        if(!offices.containsKey(user.getSchema())){
+            offices.put(user.getSchema(), new HashMap<>());
+        }
+        
+        ArrayList<Chat> chats = new ArrayList<>(offices.get(user.getSchema()).values());
+        chats.removeIf((Chat chat) -> chat.getId().length() < 10);
+        
+        return chats;
+    }  
+    
+    @MessageMapping("/getChat/{id}")
+    @SendTo("/topic/getChatResponse/{id}")
+    public Chat getChat(Message message, @DestinationVariable String id){
+        System.out.println("Getting chat");
+        Chat chat = null; 
+        User user = message.getUser();
+        
+        if(offices.containsKey(user.getSchema())){
+            HashMap<String, Chat> officeChats = offices.get(user.getSchema());
+            if(officeChats.containsKey(id)){
+                chat = officeChats.get(id);
+            }
+        }
+        
+        return chat;
+    }
+    
+    
 }

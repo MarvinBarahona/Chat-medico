@@ -40,8 +40,8 @@ export class AtenderComponent implements OnInit, OnDestroy {
         }
       }));
 
-      this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/removeChat/'+this.schema, (id: string) => {
-        let chatInArray = this.chats.find((_chat)=>{return _chat.id == id});
+      this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/removeChat/'+this.schema, (chat: Chat) => {
+        let chatInArray = this.chats.find((_chat)=>{return _chat.id == chat.id});
         if(chatInArray){
           let i = this.chats.indexOf(chatInArray);
           this.chats.splice(i, 1);

@@ -21,11 +21,14 @@ public class LoginUser implements Serializable {
     @Column(name="usuario")
     private String username;
     
-    @Column(name="contra")
+    @Column(name="contra", nullable = true)
     private String password;
     
     @Column(name="nombre")
     private String name;
+    
+    @Column(name="activo")
+    private boolean active;
     
     @ManyToOne
     @JoinColumn(name="rol_id")
@@ -37,7 +40,7 @@ public class LoginUser implements Serializable {
     
     public LoginUser() { }
 
-    public LoginUser(String username, String name, String password, String role) {
+    public LoginUser(String username, String name, String password) {
         this.username = username;
         this.name = name;
         this.password = password;
@@ -85,6 +88,14 @@ public class LoginUser implements Serializable {
 
     public void setOffice(Office office) {
         this.office = office;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
     
     

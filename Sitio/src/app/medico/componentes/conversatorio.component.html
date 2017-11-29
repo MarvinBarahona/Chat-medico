@@ -1,2 +1,18 @@
-<p>Conversatorio</p>
-<chat></chat>
+<span *ngIf="chat.state == 'En curso'"><strong>Tema: </strong>{{chat.topic}}</span>
+<span *ngIf="!chat.state || chat.state == 'Pendiente'">Este chat no está disponible</span>
+<span *ngIf="chat.state == 'Terminada'">Este chat ha terminado</span>
+
+<chat *ngIf="chat.state == 'En curso'"></chat>
+
+<div class="center" *ngIf="!chat.state">
+  <button type="button" class="btn" (click)="iniciar()">Terminar</button>
+</div>
+
+<div class="center" *ngIf="chat.state == 'En curso'">
+  <a class="btn" routerLink="/medico/chats">Abandonar</a>
+  <button type="button" class="btn" (click)="terminar()">Terminar</button>
+</div>
+
+<div class="center" *ngIf="chat.state == 'Terminada'">
+  <button type="button" class="btn" (click)="eliminar()">Eliminar</button>
+</div>

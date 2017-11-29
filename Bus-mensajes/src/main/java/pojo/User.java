@@ -6,15 +6,17 @@ public class User {
     private String role;
     private String officeName;
     private String schema;
+    private boolean active; 
 
     public User(){}
 
-    public User(long id, String name, String role, String officeName, String schema) {
+    public User(long id, String name, String role, String officeName, String schema, boolean active) {
         this.id = id;
         this.name = name;
         this.role = role;
         this.officeName = officeName;
         this.schema = schema;
+        this.active = active;
     }
 
     public long getId() {
@@ -56,5 +58,12 @@ public class User {
     public void setSchema(String schema) {
         this.schema = schema;
     }
-    
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

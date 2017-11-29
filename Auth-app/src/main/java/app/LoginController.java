@@ -24,7 +24,7 @@ public class LoginController {
     public void login(LoginUser loginUser, @DestinationVariable String id) throws Exception {
         LoginUser databaseUser = repository.findByUsername(loginUser.getUsername());
         
-        if(databaseUser != null){            
+        if(databaseUser != null && databaseUser.isActive()){            
             if(BCrypt.checkpw(loginUser.getPassword(), databaseUser.getPassword())){
                 User user = new User(databaseUser.getId(), databaseUser.getName(), databaseUser.getRole().getName(), databaseUser.getOffice().getName(), databaseUser.getOffice().getSchema());
                 // Mandando respuesta exitosa al bus.
