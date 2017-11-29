@@ -10,12 +10,14 @@ import { Chat } from './../../chat/';
 })
 
 export class ConversatorioComponent implements OnInit {
-  id: number;
+  id: string;
+  schema: string;
   chat: Chat;
   subscriptions: any[];
 
   constructor(private router: Router, private route: ActivatedRoute, private stompService: MyStompService) {
     this.id = this.route.snapshot.params['id'];
+    this.schema = this.stompService.getUser().schema;
     this.chat = new Chat;
     this.subscriptions = [];
   }

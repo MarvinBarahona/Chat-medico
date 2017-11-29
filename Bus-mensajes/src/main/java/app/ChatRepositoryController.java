@@ -40,10 +40,11 @@ public class ChatRepositoryController {
         }
         
         officeChats = offices.get(user.getSchema());
-        officeChats.put(chat.getId(), chat);
-        
-        template.convertAndSend("/topic/addChat/"+user.getSchema(), chat);
-        if(id.length() > 10) template.convertAndSend("/topic/addStartedConference/"+user.getSchema(), chat);
+        if(!officeChats.containsKey(id)){
+            officeChats.put(chat.getId(), chat);
+            template.convertAndSend("/topic/addChat/"+user.getSchema(), chat);
+            if(id.length() > 10) template.convertAndSend("/topic/addStartedChat/"+user.getSchema(), chat);
+        }           
     }
     
     @MessageMapping("/startChat/{id}")
@@ -80,7 +81,7 @@ public class ChatRepositoryController {
         Chat chat = officeChats.remove(id);
         
         template.convertAndSend("/topic/removeChat/"+user.getSchema(), chat);
-        if(id.length() > 10) template.convertAndSend("/topic/removeStartedConference/"+user.getSchema(), chat);
+        if(id.length() > 10) template.convertAndSend("/topic/removeStartedChat/"+user.getSchema(), chat);
     }
 
     @MessageMapping("/getChats/{id}")

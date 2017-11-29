@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { CookieModule } from 'ngx-cookie';
 import { MaterializeModule } from 'angular2-materialize';
@@ -14,7 +15,8 @@ import * as c from './componentes';
     HttpModule,
     FormsModule,
     MaterializeModule,
-    CookieModule.forChild()
+    CookieModule.forChild(),
+    RouterModule.forChild([])
   ],
   declarations: [
     c.ChatComponent,

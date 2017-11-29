@@ -3,7 +3,7 @@
     <h5>Conferencias futuras</h5>
     <div *ngFor="let conference of conferences">
       <p>
-        <a [routerLink]="['/'+role+'/chats/'+conference.id]">{{conference.topic}}</a><br>
+        <a (click)="agregar(conference)">{{conference.topic}}</a><br>
         <span>{{conference.date | date: 'dd/MM/yy hh:mm'}}</span>
       </p>
     </div>
@@ -11,7 +11,7 @@
     <h5>Conferencias</h5>
     <div *ngFor="let chat of chats">
       <p>
-        <a [routerLink]="['/'+role+'/chats/'+chat.id]">{{chat.name}}</a><br>
+        <a [routerLink]="['/'+role+'/conversatorios/'+chat.id]">{{chat.name}}</a><br>
         <span>{{chat.state}}</span>
       </p>
     </div>

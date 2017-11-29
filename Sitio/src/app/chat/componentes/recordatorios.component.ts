@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MyStompService } from './../../stompService/';
-import { Conference, chat } from './../clases/';
+import { Conference, Chat } from './../clases/';
 
 declare var $: any;
 
@@ -72,8 +72,9 @@ export class RecordatoriosComponent implements OnInit, OnDestroy {
     }, 2000);
   }
 
-  goToConference(id: string){
-    this.router.navigate(['/'+this.role+'/chats/'+id]);
+  agregar(conference: Conference){
+    this.stompService.sendWithUser("/app/addChat/" + conference.id, conference.topic);
+    this.router.navigate(['/'+this.role+'/conversatorios/'+conference.id]);
   }
 
   ngOnDestroy(){
