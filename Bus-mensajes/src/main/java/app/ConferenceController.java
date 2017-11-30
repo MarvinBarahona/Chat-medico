@@ -119,7 +119,7 @@ public class ConferenceController {
         });
         
         // Mandar mensaje a la app. 
-        String m = mapper.writeValueAsString(conference);
+        String m = mapper.writeValueAsString(conference.getId());
         session.send("/mongo/deleteConference/"+id, m.getBytes());
     }
 }

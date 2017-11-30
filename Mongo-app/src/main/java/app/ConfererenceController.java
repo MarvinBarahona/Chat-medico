@@ -31,8 +31,9 @@ public class ConfererenceController {
     
     @MessageMapping("/deleteConference/{id}")
     @SendTo("/topic/deleteConferenceResponse/{id}")
-    public Conference deleteConference(Conference conference){
+    public Conference deleteConference(String idDelete){
         System.out.println("Delete conference");
+        Conference conference = repository.findOne(idDelete);
         repository.delete(conference);
         return conference;
     }

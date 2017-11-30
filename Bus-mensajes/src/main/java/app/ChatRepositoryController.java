@@ -1,16 +1,24 @@
 package app;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.stomp.StompFrameHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.stereotype.Controller;
 import pojo.Chat;
+import pojo.Conference;
 import pojo.Message;
 import pojo.User;
 
@@ -48,7 +56,7 @@ public class ChatRepositoryController {
     }
     
     @MessageMapping("/startChat/{id}")
-    public void startChat(Message message, @DestinationVariable String id){
+    public void startChat(Message message, @DestinationVariable String id) throws Exception{
         System.out.println("Starting chat");
         User user = message.getUser();
         
@@ -57,6 +65,34 @@ public class ChatRepositoryController {
               
         chat.setState("En curso");
         template.convertAndSend("/topic/addChat/"+user.getSchema(), chat);
+        if(id.length() > 10) template.convertAndSend("/topic/addStartedChat/"+user.getSchema(), chat);
+        
+        System.out.println("Deleting conference");
+        
+        StompClient stompClient = new StompClient();
+        StompSession session = stompClient.connect(8100);
+        
+        // Suscribirse a la respuesta exitosa de la app.
+        session.subscribe("/topic/deleteConferenceResponse/"+id, new StompFrameHandler() {
+
+            @Override
+            public Type getPayloadType(StompHeaders sh) {return byte[].class;}
+
+            @Override
+            public void handleFrame(StompHeaders sh, Object o) {
+                try {
+                    Conference conference = mapper.readValue(new String((byte[]) o, "UTF-8"), Conference.class);
+                    template.convertAndSend("/topic/removeConference/"+conference.getSchema(), conference);
+                    session.disconnect();
+                } catch (IOException ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        // Mandar mensaje a la app. 
+        String m = mapper.writeValueAsString(id);
+        session.send("/mongo/deleteConference/"+id, m.getBytes());
     }
     
     @MessageMapping("/endChat/{id}")
@@ -70,6 +106,7 @@ public class ChatRepositoryController {
         if(chat != null){
             chat.setState("Terminada");        
             template.convertAndSend("/topic/addChat/"+user.getSchema(), chat); 
+            if(id.length() > 10) template.convertAndSend("/topic/addStartedChat/"+user.getSchema(), chat);
         }       
     }
     
