@@ -51,7 +51,7 @@ export class ConversatoriosComponent implements OnInit, OnDestroy {
             minHour: 7,
             maxHour: 21
           });
-        }, 500);        
+        }, 500);
       }));
 
       this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/addConference/' + this.schema, (conference: Conference) => {
@@ -77,6 +77,7 @@ export class ConversatoriosComponent implements OnInit, OnDestroy {
     let i = this.time.indexOf(":");
     let t = this.time.slice(0, i);
     this.newConference.date.setHours(Number.parseInt(t));
+    this.newConference.date.setMinutes(0);
     this.stompService.sendWithUser("/app/newConference/"+this.id, this.newConference);
   }
 

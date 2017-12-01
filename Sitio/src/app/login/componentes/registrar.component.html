@@ -4,7 +4,7 @@
       <h4>Registrar consultorio</h4>
 
       <!-- Formulario -->
-      <form #registrarForm="ngForm" (ngSubmit)="registrar()">
+      <form #registrarForm="ngForm" (ngSubmit)="registrar()" autocomplete="off">
         <div class="row">
           <div class="input-field col s12 l8 offset-l2">
             <input id="nombre" type="text" class="validate" name="nombre" [(ngModel)]="office.name" required>

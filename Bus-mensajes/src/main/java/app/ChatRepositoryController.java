@@ -65,34 +65,35 @@ public class ChatRepositoryController {
               
         chat.setState("En curso");
         template.convertAndSend("/topic/addChat/"+user.getSchema(), chat);
-        if(id.length() > 10) template.convertAndSend("/topic/addStartedChat/"+user.getSchema(), chat);
+        if(id.length() > 10){
+            template.convertAndSend("/topic/addStartedChat/"+user.getSchema(), chat);
+            System.out.println("Deleting conference");
         
-        System.out.println("Deleting conference");
-        
-        StompClient stompClient = new StompClient();
-        StompSession session = stompClient.connect(8100);
-        
-        // Suscribirse a la respuesta exitosa de la app.
-        session.subscribe("/topic/deleteConferenceResponse/"+id, new StompFrameHandler() {
+            StompClient stompClient = new StompClient();
+            StompSession session = stompClient.connect(8100);
 
-            @Override
-            public Type getPayloadType(StompHeaders sh) {return byte[].class;}
+            // Suscribirse a la respuesta exitosa de la app.
+            session.subscribe("/topic/deleteConferenceResponse/"+id, new StompFrameHandler() {
 
-            @Override
-            public void handleFrame(StompHeaders sh, Object o) {
-                try {
-                    Conference conference = mapper.readValue(new String((byte[]) o, "UTF-8"), Conference.class);
-                    template.convertAndSend("/topic/removeConference/"+conference.getSchema(), conference);
-                    session.disconnect();
-                } catch (IOException ex) {
-                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                @Override
+                public Type getPayloadType(StompHeaders sh) {return byte[].class;}
+
+                @Override
+                public void handleFrame(StompHeaders sh, Object o) {
+                    try {
+                        Conference conference = mapper.readValue(new String((byte[]) o, "UTF-8"), Conference.class);
+                        template.convertAndSend("/topic/removeConference/"+conference.getSchema(), conference);
+                        session.disconnect();
+                    } catch (IOException ex) {
+                        Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            }
-        });
-        
-        // Mandar mensaje a la app. 
-        String m = mapper.writeValueAsString(id);
-        session.send("/mongo/deleteConference/"+id, m.getBytes());
+            });
+
+            // Mandar mensaje a la app. 
+            String m = mapper.writeValueAsString(id);
+            session.send("/mongo/deleteConference/"+id, m.getBytes());
+        }       
     }
     
     @MessageMapping("/endChat/{id}")
