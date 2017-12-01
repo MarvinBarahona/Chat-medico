@@ -1,54 +1,24 @@
-package models;
+package pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-@Entity
-@Table(name="consultorio")
-public class Office implements Serializable {
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="consultorio_id")
+public class Office {
     private long id;
-    
-    @Column(name="nombre")
     private String name;
-    
-    @Column(name="ubicacion")
     private String address;
-    
-    @Column(name="descripcion")
     private String description;
-    
-    @Column(name="esquema")
     private String schema;
-    
-    @Transient
     private LoginUser admin;
-    
-    @Transient
     private LoginUser nurse;
 
-    public Office() {
-    }
-
-    public Office(String name, String address, String schema) {
-        this.name = name;
-        this.address = address;
-        this.schema = schema;
-    }
+    public Office() {}
 
     public long getId() {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    
     public String getName() {
         return name;
     }
