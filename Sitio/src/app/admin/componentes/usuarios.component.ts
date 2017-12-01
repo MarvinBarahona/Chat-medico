@@ -15,8 +15,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   sub: any;
 
   constructor(private router: Router, private stompService: MyStompService) {
-    this.users = [];
-
     this.id = this.stompService.getUser().id;
   }
 

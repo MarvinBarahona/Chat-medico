@@ -22,7 +22,6 @@ import * as c from './componentes';
   ],
   declarations: [
     c.AdminRootComponent,
-    c.PreferenciasComponent,
     c.ConversatoriosComponent,
     c.UsuarioComponent,
     c.UsuariosComponent,

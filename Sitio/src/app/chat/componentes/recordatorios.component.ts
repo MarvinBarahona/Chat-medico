@@ -22,9 +22,6 @@ export class RecordatoriosComponent implements OnInit, OnDestroy {
   role: string;
 
   constructor(private router: Router, private stompService: MyStompService) {
-    this.conferences = [];
-    this.chats = [];
-
     this.subscriptions = [];
     this.id = this.stompService.getUser().id;
     this.schema = this.stompService.getUser().schema;

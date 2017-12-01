@@ -1,9 +1,22 @@
-<span *ngIf="chat.state == 'En curso'"><strong>Tema: </strong>{{chat.name}}</span>
-<span *ngIf="chat.state == 'Pendiente'">Este chat no está disponible</span>
-<span *ngIf="chat.state == 'Terminada'">Este chat ha terminado</span>
+<div *ngIf="chat; else elseTemplate;">
+  <span *ngIf="chat.state == 'En curso'"><strong>Tema: </strong>{{chat.name}}</span>
+  <span *ngIf="chat.state == 'Pendiente'">Este chat no está disponible</span>
+  <span *ngIf="chat.state == 'Terminada'">Este chat ha terminado</span>
 
-<chat *ngIf="chat.state == 'En curso'"></chat>
+  <chat *ngIf="chat.state == 'En curso'"></chat>
 
-<div class="center" *ngIf="chat.state == 'En curso'">
-  <a class="btn" routerLink="/paciente/chats">Abandonar</a>
+  <div class="center" *ngIf="chat.state == 'En curso'">
+    <a class="btn" routerLink="/paciente/chats">Abandonar</a>
+  </div>
 </div>
+
+<ng-template #elseTemplate>
+  <div class="row">
+    <div class="col s8 m8 offset-s2 offset-m2">
+      <p>Cargando...</p>
+      <div class="progress">
+        <div class="indeterminate"></div>
+      </div>
+    </div>
+  </div>
+</ng-template>
