@@ -21,7 +21,7 @@ public class OfficeController {
     
     @MessageMapping("/createOffice/{id}")
     @SendTo("/topic/createOfficeResponse/{id}")
-    public Office login(Office office) throws Exception {
+    public Office createOffice(Office office) throws Exception {
         office.getAdmin().setName(office.getAdmin().getUsername());
         office.getAdmin().setUsername("admin@" + office.getSchema());
         office.getAdmin().setActive(true);

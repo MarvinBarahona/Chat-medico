@@ -7,6 +7,7 @@ public class User {
     private String officeName;
     private String schema;
     private boolean active;
+    private String newPassword;
 
     public User(){}
 
@@ -26,6 +27,15 @@ public class User {
         this.officeName = officeName;
         this.schema = schema;
         this.active = active;
+    }
+    
+    public User(LoginUser loginUser){
+        this.id = loginUser.getId();
+        this.name = loginUser.getName();
+        this.role = loginUser.getRole().getName();
+        this.officeName = loginUser.getOffice().getName();
+        this.schema = loginUser.getOffice().getSchema();
+        this.active = loginUser.isActive();
     }
 
     public long getId() {
@@ -75,7 +85,13 @@ public class User {
     public void setActive(boolean active) {
         this.active = active;
     }
-    
-    
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }   
 }
 

@@ -1,5 +1,23 @@
-<p>Usuarios</p>
+<div class="card-panel">
+  <h5>Usuarios</h5>
 
-<a class="btn" routerLink="/admin/usuarios/1">Usuario</a>
-<a class="btn" routerLink="/admin/usuarios/nuevoMasivo">Masivo</a>
-<a class="btn" routerLink="/admin/usuarios/nuevoIndividual">Individual</a>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Rol</th>
+        <th>Activo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <th>{{user.name}}</th>
+        <th>{{user.role}}</th>
+        <th>
+          <input type="checkbox" class="filled-in" [id]="user.id" [(ngModel)]="user.active" (change)="guardar(user)"/>
+          <label for="{{user.id}}"></label>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</div>
