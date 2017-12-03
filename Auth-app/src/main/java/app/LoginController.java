@@ -22,11 +22,12 @@ public class LoginController {
     // Este método se ejecuta al mandar un mensaje a /auth/login
     @MessageMapping("/login/{id}")
     public void login(LoginUser loginUser, @DestinationVariable String id) throws Exception {
+        System.out.println("Login attemp");
         LoginUser databaseUser = repository.findByUsername(loginUser.getUsername());
         
         if(databaseUser != null && databaseUser.isActive()){            
             if(BCrypt.checkpw(loginUser.getPassword(), databaseUser.getPassword())){
-                User user = new User(databaseUser.getId(), databaseUser.getName(), databaseUser.getRole().getName(), databaseUser.getOffice().getName(), databaseUser.getOffice().getSchema());
+                User user = new User(databaseUser);
                 // Mandando respuesta exitosa al bus.
                 template.convertAndSend("/topic/loginResponse/"+id, user);
             }

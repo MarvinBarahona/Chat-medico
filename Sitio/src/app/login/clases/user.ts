@@ -4,4 +4,7 @@ export class User {
   role: string;
   officeName: string;
   schema: string;
+  active: boolean;
+  
+  newPassword: string;
 }

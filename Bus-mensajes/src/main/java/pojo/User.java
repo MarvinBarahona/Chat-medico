@@ -6,7 +6,8 @@ public class User {
     private String role;
     private String officeName;
     private String schema;
-    private boolean active; 
+    private boolean active;
+    private String newPassword;
 
     public User(){}
 
@@ -65,5 +66,14 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }   
+
+    public String getNewPassword() {
+        return newPassword;
     }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+    
 }

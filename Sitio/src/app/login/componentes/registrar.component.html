@@ -2,14 +2,49 @@
   <div class="col s12 l8 offset-l2">
     <div class="card-panel">
       <h4>Registrar consultorio</h4>
-      <div class="row">
-        
-      </div>
 
-      <!-- Botón -->
+      <!-- Formulario -->
+      <form #registrarForm="ngForm" (ngSubmit)="registrar()" autocomplete="off">
+        <div class="row">
+          <div class="input-field col s12 l8 offset-l2">
+            <input id="nombre" type="text" class="validate" name="nombre" [(ngModel)]="office.name" required>
+            <label for="nombre">Nombre del consultorio</label>
+          </div>
+          <div class="input-field col s12 l8 offset-l2">
+            <input id="ubica" type="text" class="validate" name="ubica" [(ngModel)]="office.address" required>
+            <label for="ubica">Ubicación</label>
+          </div>
+          <div class="input-field col s12 l8 offset-l2">
+            <input id="descr" type="text" class="validate" name="descr" [(ngModel)]="office.description" required>
+            <label for="descr">Descripción del consultorio</label>
+          </div>
+          <div class="input-field col s12 l8 offset-l2">
+            <input id="adminN" type="text" class="validate" name="adminN" [(ngModel)]="office.admin.username" required>
+            <label for="adminN">Nombre administrador</label>
+          </div>
+          <div class="input-field col s12 l8 offset-l2">
+            <input id="admin" type="password" class="validate" name="admin" [(ngModel)]="office.admin.password" required>
+            <label for="admin">Contraseña del administrador</label>
+          </div>
+          <div class="input-field col s12 l8 offset-l2">
+            <input id="enfer" type="password" class="validate" name="enfer" [(ngModel)]="office.nurse.password" required>
+            <label for="enfer">Contraseña del enfermeras</label>
+          </div>
+        </div>
+
+        <!-- Botón -->
+        <div class="row">
+          <div class="center">
+            <button type="submit" class="btn waves-effect waves-light" [disabled]="!registrarForm.form.valid">Registrar</button>
+          </div>
+        </div>
+      </form>
+      <!-- /form -->
+
+      <!-- Mensajes -->
       <div class="row">
-        <div class="center">
-          <button class="btn">Registrar</button>
+        <div class="alert alert-info col s6 offset-s3" *ngIf="message">
+          <p>{{message}}</p>
         </div>
       </div>
 

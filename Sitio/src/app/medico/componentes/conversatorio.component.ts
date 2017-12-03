@@ -18,7 +18,6 @@ export class ConversatorioComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private stompService: MyStompService) {
     this.id = this.route.snapshot.params['id'];
     this.schema = this.stompService.getUser().schema;
-    this.chat = new Chat;
     this.subscriptions = [];
   }
 

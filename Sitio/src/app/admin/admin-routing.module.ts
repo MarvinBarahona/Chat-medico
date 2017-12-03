@@ -11,14 +11,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/admin/preferencias',
+        redirectTo: '/admin/usuarios',
         pathMatch: 'full'
-      },
-      {
-        path: 'preferencias',
-        component: c.PreferenciasComponent,
-        canActivate: [AppAuthGuard],
-        data: {role: "admin"}
       },
       {
         path: 'conversatorios',

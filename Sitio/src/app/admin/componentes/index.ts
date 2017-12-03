@@ -1,5 +1,4 @@
 export { AdminRootComponent } from './admin-root.component';
-export { PreferenciasComponent } from './preferencias.component';
 export { ConversatoriosComponent } from './conversatorios.component';
 export { UsuariosComponent } from './usuarios.component';
 export { UsuarioComponent } from './usuario.component';

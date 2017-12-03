@@ -20,7 +20,6 @@ export class AtenderComponent implements OnInit, OnDestroy {
     this.id = this.stompService.getUser().id;
     this.subscriptions = [];
     this.schema = this.stompService.getUser().schema;
-	  this.chats = [];
   }
 
   ngOnInit() {

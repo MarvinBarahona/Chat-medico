@@ -33,7 +33,6 @@ export class ConversatoriosComponent implements OnInit, OnDestroy {
 
     this.newConference = new Conference;
 	  this.newConference.date = new Date;
-    this.conferences = [];
 
     this.subscriptions = [];
     this.id = this.stompService.getUser().id;
@@ -41,17 +40,18 @@ export class ConversatoriosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    $('input.timepicker').timepicker({
-      timeFormat: 'HH:mm',
-      change: (time: Date) => { this.time = time.getHours() + ":00";},
-      interval: 60,
-      minHour: 7,
-      maxHour: 21
-    });
-
     setTimeout(() => {
       this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/getConferencesResponse/' + this.id, (conferences: Conference[]) => {
         this.conferences = conferences;
+        setTimeout(()=>{
+          $('input.timepicker').timepicker({
+            timeFormat: 'HH:mm',
+            change: (time: Date) => { this.time = time.getHours() + ":00";},
+            interval: 60,
+            minHour: 7,
+            maxHour: 21
+          });
+        }, 500);
       }));
 
       this.subscriptions.push(this.stompService.getStomp().subscribe('/topic/addConference/' + this.schema, (conference: Conference) => {
@@ -77,6 +77,7 @@ export class ConversatoriosComponent implements OnInit, OnDestroy {
     let i = this.time.indexOf(":");
     let t = this.time.slice(0, i);
     this.newConference.date.setHours(Number.parseInt(t));
+    this.newConference.date.setMinutes(0);
     this.stompService.sendWithUser("/app/newConference/"+this.id, this.newConference);
   }
 
