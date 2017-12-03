@@ -1,0 +1,65 @@
+<div *ngIf="conferences; else elseTemplate;">
+  <div class="row">
+    <div class="col l10 offset-l1 s12">
+      <div class="card-panel">
+        <form #conversatorioForm="ngForm" autocomplete="off" (submit)="guardar()">
+          <div class="row">
+            <div class="input-field col l10 offset-l1 s10 offset-s1">
+              <span>Tema:</span>
+              <input id="topic" name="topic" type="text" class="validate" maxlength="60" [(ngModel)]="newConference.topic" required>
+            </div>
+
+            <div class="input-field col l5 offset-l1 s10 offset-s1">
+              <span>Día:</span>
+              <ng-datepicker name="date" [(ngModel)]="newConference.date" [options]="dpOptions"></ng-datepicker>
+            </div>
+
+            <div class="input-field col l5 offset-l1 s10 offset-s1">
+              <span>Hora:</span>
+              <input id="time" name="time" type="text" class="validate timepicker" [(ngModel)]="time" required>
+            </div>
+          </div>
+
+          <div class="row center">
+            <button type="submit" class="btn s4" [disabled]="!conversatorioForm.form.valid || !newConference.date">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col l10 offset-l1 s12">
+      <div class="card-panel">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Tema</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <p *ngIf="conferences.length == 0">No hay registros que mostrar</p>
+            <tr *ngFor="let conference of conferences">
+              <th>{{conference.date | date:'dd/MM/yy HH:mm'}}</th>
+              <th>{{conference.topic}}</th>
+              <th><button class="btn" (click)="eliminar(conference)"><i class="material-icons borrar">delete</i></button></th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #elseTemplate>
+  <div class="row">
+    <div class="col s8 m8 offset-s2 offset-m2">
+      <p>Cargando...</p>
+      <div class="progress">
+        <div class="indeterminate"></div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,24 @@
+<!-- Side nav -->
+<ul id="slide-out" class="side-nav fixed">
+  <li routerLinkActive="active">
+    <a routerLink="/paciente/chats">Solicitar consulta</a>
+  </li>
+</ul>
+<!-- /Side nav -->
+
+<!-- Espacio para los componentes (ver el css de este componente) -->
+<div class="component">
+  <div>
+    <h4 class="center-align">Sección de pacientes</h4>
+  </div>
+
+  <div class="row">
+    <div class="col l8 s12">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="col l4 s12">
+      <recordatorios></recordatorios>
+    </div>
+  </div>
+
+</div>

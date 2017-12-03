@@ -1,0 +1,49 @@
+<div class="card-panel" *ngIf="users; else elseTemplate;">
+  <h5>Usuarios</h5>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Rol</th>
+        <th>Activo</th>
+        <th>Activar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <p *ngIf="users.length == 0">No hay registros que mostrar</p>
+      <tr *ngFor="let user of users">
+        <th>{{user.name}}</th>
+        <th>{{user.role}}</th>
+        <th>{{user.active? 'Activo':'Inactivo'}}</th>
+        <th><button class="btn" (click)="openModal(user)">Activar</button></th>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #elseTemplate>
+  <div class="row">
+    <div class="col s8 m8 offset-s2 offset-m2">
+      <p>Cargando...</p>
+      <div class="progress">
+        <div class="indeterminate"></div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActivar">
+  <div class="modal-content" *ngIf="user">
+    <div class="row">
+      <div class="input-field col l8 offset-l2 s12">
+        <input id="pass" name="pass" [(ngModel)]="user.newPassword" type="password" class="validate" required>
+        <label for="pass">Contraseña</label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="btn" (click)="guardar()">Guardar</a>
+    <a class="btn" (click)="closeModal()">Cancelar</a>
+  </div>
+</div>

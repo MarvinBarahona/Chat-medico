@@ -1,0 +1,32 @@
+<div class="row" *ngIf="chats && conferences; else elseTemplate;">
+  <div class="col s12">
+    <h5>Conferencias futuras</h5>
+    <p *ngIf="conferences.length == 0">No hay registros que mostrar</p>
+    <div *ngFor="let conference of conferences">
+      <p>
+        <a (click)="agregar(conference)">{{conference.topic}}</a><br>
+        <span>{{conference.date | date: 'dd/MM/yy hh:mm'}}</span>
+      </p>
+    </div>
+
+    <h5>Conferencias</h5>
+    <p *ngIf="chats.length == 0">No hay registros que mostrar</p>
+    <div *ngFor="let chat of chats">
+      <p>
+        <a [routerLink]="['/'+role+'/conversatorios/'+chat.id]">{{chat.name}}</a><br>
+        <span>{{chat.state}}</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<ng-template #elseTemplate>
+  <div class="row">
+    <div class="col s8 m8 offset-s2 offset-m2">
+      <p>Cargando...</p>
+      <div class="progress">
+        <div class="indeterminate"></div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,17 @@
+<chat></chat>
+
+<br><br>
+<div class="center">
+  <a class="btn" routerLink="/medico/chats">Abandonar</a>
+  <button type="button" class="btn" (click)="terminar()">Terminar</button>
+</div>
+
+<div class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalFicha">
+  <div class="modal-content">
+    <ficha></ficha>
+  </div>
+  <div class="modal-footer">
+    <a class="btn">Sí</a>
+    <a class="btn" (click)="closeFicha()">No</a>
+  </div>
+</div>

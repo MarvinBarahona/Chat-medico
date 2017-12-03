@@ -1,0 +1,25 @@
+<div class="card-panel">
+  <div class="row">
+    <div class="input-field col s8">
+      <input id="mensaje" name="message" type="text" [(ngModel)]="message" (keyup.enter)="enviar()">
+      <label for="mensaje">Enviar mensaje...</label>
+    </div>
+    <div class="col s2 offset-s1">
+      <button class="btn" [disabled]="!message" (click)="enviar()">Enviar</button>
+    </div>
+  </div>
+
+  <div class="row" id="chat">
+    <div class="col s10" *ngFor="let message of messages" [class.right]="message.sender == myName" [class.offset-s1]="message.sender == 'system'" [class.center]="message.sender == 'system'">
+      <span *ngIf="message.sender != 'system'">
+        <strong>{{message.sender}}</strong><br>
+        {{message.message}}
+      </span>
+	  
+	  <span *ngIf="message.sender=='system'">
+		<strong>** {{message.message}} **</strong>
+	  </span>
+	  
+    </div>
+  </div>
+</div>
