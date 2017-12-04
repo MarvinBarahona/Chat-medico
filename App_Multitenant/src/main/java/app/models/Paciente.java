@@ -1,6 +1,7 @@
 package app.models;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -26,16 +29,19 @@ public class Paciente implements Serializable {
     private String nombre;
     
     @Size(max = 50)
-    @Column(name = "apellido")
-    private String apellido;
+    @Column(name = "codigo")
+    private String codigo;
+    
+    @Column(name = "fecha_nacimiento")
+    @Temporal(TemporalType.DATE)
+    private Date fechaNacimiento;
 
     public Paciente() {
     }
 
-    public Paciente(Integer idPaciente, String nombre, String apellido) {
+    public Paciente(Integer idPaciente, String nombre) {
         this.idPaciente = idPaciente;
         this.nombre = nombre;
-        this.apellido = apellido;
     }
 
     public Integer getIdPaciente() {
@@ -52,13 +58,21 @@ public class Paciente implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    } 
+
+    public String getCodigo() {
+        return codigo;
     }
 
-    public String getApellido() {
-        return apellido;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }  
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
 }

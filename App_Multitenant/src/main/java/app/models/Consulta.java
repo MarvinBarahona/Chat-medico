@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "consulta")
 public class Consulta implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +45,11 @@ public class Consulta implements Serializable {
     @JoinColumn(name = "id_receta", referencedColumnName = "id_receta")
     @ManyToOne
     private Receta receta;
+    
+    @JoinColumn(name = "id_referencia", referencedColumnName = "id_referencia")
+    @ManyToOne
+    private Referencia idReferencia;
+
 
     public Consulta() {
     }
@@ -109,4 +114,12 @@ public class Consulta implements Serializable {
     public void setReceta(Receta receta) {
         this.receta = receta;
     }  
+
+    public Referencia getIdReferencia() {
+        return idReferencia;
+    }
+
+    public void setIdReferencia(Referencia idReferencia) {
+        this.idReferencia = idReferencia;
+    }
 }

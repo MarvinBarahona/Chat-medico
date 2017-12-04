@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DiagnosticoRepository extends CrudRepository<Diagnostico, Integer>{
-    Diagnostico findBySeveridad(Short grado);    
+   
 }

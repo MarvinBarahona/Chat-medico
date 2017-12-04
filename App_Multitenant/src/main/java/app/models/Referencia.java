@@ -1,18 +1,13 @@
 package app.models;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -30,27 +25,16 @@ public class Referencia implements Serializable {
     @Column(name = "motivo")
     private String motivo;
     
-    @Column(name = "fecha")
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
-    
-    @JoinColumn(name = "id_medico", referencedColumnName = "id_medico")
-    @ManyToOne
-    private Medico medico;
-    
-    @JoinColumn(name = "id_paciente", referencedColumnName = "id_paciente")
-    @ManyToOne
-    private Paciente paciente;
+    @Size(max = 50)
+    @Column(name = "especialidad")
+    private String especialidad;
 
     public Referencia() {
     }
 
-    public Referencia(Integer idReferencia, String motivo, Date fecha, Medico medico, Paciente paciente) {
+    public Referencia(Integer idReferencia, String motivo) {
         this.idReferencia = idReferencia;
-        this.motivo = motivo;
-        this.fecha = fecha;
-        this.medico = medico;
-        this.paciente = paciente;
+        this.motivo = motivo;        
     }
 
     public Integer getIdReferencia() {
@@ -69,27 +53,11 @@ public class Referencia implements Serializable {
         this.motivo = motivo;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public String getEspecialidad() {
+        return especialidad;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public Medico getMedico() {
-        return medico;
-    }
-
-    public void setMedico(Medico medico) {
-        this.medico = medico;
-    }
-
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
     }
 }

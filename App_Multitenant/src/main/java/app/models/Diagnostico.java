@@ -8,14 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "diagnostico")
 public class Diagnostico implements Serializable {
-
-    @Column(name = "id_referencia")
-    private Integer idReferencia;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -24,17 +20,18 @@ public class Diagnostico implements Serializable {
     @Column(name = "id_diagnostico")
     private Integer idDiagnostico;
 
-    @Size(max = 2147483647)
     @Column(name = "descripcion")
     private String descripcion;
-    //Es un smallint, grados: leve:3, medio:2 y grave:1    
-    @Column(name = "severidad")
-    private Short severidad;
+    
+    @Column(name = "titulo")
+    private String titulo;
+     
+    @Column(name = "sintoma")
+    private String sintoma;
 
-    public Diagnostico(Integer idDiagnostico, String descripcion, Short severidad) {
+    public Diagnostico(Integer idDiagnostico, String descripcion) {
         this.idDiagnostico = idDiagnostico;
         this.descripcion = descripcion;
-        this.severidad = severidad;
     }
 
     public Diagnostico() {
@@ -56,20 +53,19 @@ public class Diagnostico implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Short getSeveridad() {
-        return severidad;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setSeveridad(Short severidad) {
-        this.severidad = severidad;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public Integer getIdReferencia() {
-        return idReferencia;
+    public String getSintoma() {
+        return sintoma;
     }
 
-    public void setIdReferencia(Integer idReferencia) {
-        this.idReferencia = idReferencia;
+    public void setSintoma(String sintoma) {
+        this.sintoma = sintoma;
     }
-
 }
