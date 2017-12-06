@@ -30,7 +30,7 @@ public class OfficeController {
         
         office.getNurse().setName("Enfermeras de " + office.getName());
         office.getNurse().setUsername("enfermera@" + office.getSchema());
-        office.getNurse().setRole(new Role(3, "enfermera"));
+        office.getNurse().setRole(new Role(2, "enfermera"));
         office.getNurse().setActive(true);
         office.getNurse().setPassword(BCrypt.hashpw(office.getNurse().getPassword(), BCrypt.gensalt(10)));
         
