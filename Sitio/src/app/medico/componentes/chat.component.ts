@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MaterializeDirective, MaterializeAction } from "angular2-materialize";
 
@@ -11,7 +11,7 @@ import { Consultation, Patient, Doctor, Diagnostic } from './../../clases/';
   styles: []
 })
 
-export class ChatComponent implements OnInit{
+export class ChatComponent implements OnInit, OnDestroy{
   id: number;
   modalFicha = new EventEmitter<string | MaterializeAction>();
   consultation: Consultation;
@@ -40,5 +40,13 @@ export class ChatComponent implements OnInit{
 
   openFicha() {
     this.modalFicha.emit({ action: "modal", params: ['open'] });
+  }
+
+  closeFicha() {
+    this.modalFicha.emit({ action: "modal", params: ['close'] });
+  }
+
+  ngOnDestroy(){
+    this.closeFicha();
   }
 }
