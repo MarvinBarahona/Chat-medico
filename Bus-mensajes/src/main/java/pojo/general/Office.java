@@ -1,4 +1,6 @@
-package pojo;
+package pojo.general;
+
+import pojo.LoginUser;
 
 public class Office {
     private long id;

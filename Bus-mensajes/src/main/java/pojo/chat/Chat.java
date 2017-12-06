@@ -1,4 +1,4 @@
-package pojo;
+package pojo.chat;
 
 import java.util.Date;
 

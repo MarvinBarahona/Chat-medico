@@ -1,4 +1,4 @@
-package pojo;
+package pojo.chat;
 
 public class ChatMessage {
     private String sender;
