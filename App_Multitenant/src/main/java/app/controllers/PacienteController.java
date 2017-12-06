@@ -3,20 +3,20 @@ package app.controllers;
 
 import app.models.Paciente;
 import app.repository.PacienteRepository;
+import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
-@RequestMapping("/{tenantid}")
+@RestController
+@RequestMapping("/{tenantid}/paciente")
 public class PacienteController {
         @Autowired
 	private PacienteRepository pacienteRepository;
@@ -24,18 +24,15 @@ public class PacienteController {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	@RequestMapping(value = "/paciente")
-	public String pacientes(@PathVariable String tenantid, Model model) {
-		model.addAttribute("tenantid", tenantid);
-		model.addAttribute("paciente", new Paciente());
-		model.addAttribute("pacientes", pacienteRepository.findAll());
-                return "pacientes";
+	@RequestMapping(method = RequestMethod.GET)
+	public Collection<Paciente> pacientes(@PathVariable String tenantid) {
+                return (Collection<Paciente>) pacienteRepository.findAll();
 	}
 
-	@RequestMapping(value = "paciente/add", method = RequestMethod.POST)
+	@RequestMapping(value = "add", method = RequestMethod.POST)
 	@Transactional
-	public String addPaciente(@ModelAttribute Paciente paciente, Model model) {
+	public String addPaciente(@RequestBody Paciente paciente) {
 		pacienteRepository.save(paciente);
-		return "redirect:{/tenant_id}/paciente";
+		return "redirect:/{tenant_id}/paciente";
 	}  
 }
