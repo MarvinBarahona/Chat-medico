@@ -1,6 +1,6 @@
 <div class="card-panel">
   <div class="row">
-    <div class="input-field col s8">
+    <div class="input-field col s7">
       <input id="mensaje" name="message" type="text" [(ngModel)]="message" (keyup.enter)="enviar()">
       <label for="mensaje">Enviar mensaje...</label>
     </div>
@@ -15,11 +15,11 @@
         <strong>{{message.sender}}</strong><br>
         {{message.message}}
       </span>
-	  
+
 	  <span *ngIf="message.sender=='system'">
 		<strong>** {{message.message}} **</strong>
 	  </span>
-	  
+
     </div>
   </div>
 </div>

@@ -34,7 +34,7 @@ public class PatientController {
     @MessageMapping("/savePatients/{id}")
     @SendTo("/topic/savePatientsResponse/{id}")
     public ArrayList<Patient> savePatients(Message message){
-        System.out.println("Saving patient");
+        System.out.println("Saving patients");
         ArrayList<Patient> patients = mapper.convertValue(message.getObject(), new TypeReference<ArrayList<Patient>>(){});
         return patients;
     }

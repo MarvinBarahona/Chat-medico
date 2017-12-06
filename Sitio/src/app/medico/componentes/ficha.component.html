@@ -1,5 +1,5 @@
 <!-- Formulario -->
-<form #fichaForm="ngForm" (ngSubmit)="registrar()" autocomplete="off">
+<form #fichaForm="ngForm" autocomplete="off">
   <div class="row">
     <div class="input-field col s12 l8 offset-l2">
       <input id="titulo" type="text" class="validate" name="titulo" [(ngModel)]="consultation.diagnostic.title" required>
@@ -74,6 +74,6 @@
     <button type="button" class="btn" (click)="addReference()">Referencia</button>
   </div>
   <div class="row center">
-    <button type="submit" class="btn" [disabled]="!fichaForm.form.valid">Registrar</button>
+    <button type="submit" class="btn" [disabled]="!fichaForm.form.valid" (click)="registrar()">Registrar</button>
   </div>
 </div>

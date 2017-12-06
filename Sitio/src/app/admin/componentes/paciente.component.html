@@ -1,15 +1,17 @@
 <div *ngIf="patient; else elseTemplate;">
 
-  <div class="panel-card">
+  <div class="card-panel">
     <h5 class="center">Datos del médico</h5>
 
     <span><strong>Nombre: </strong>{{patient.name}}</span><br>
     <span><strong>Código: </strong>{{patient.code}}</span><br>
     <span><strong>Día de nacimiento: </strong>{{patient.birthday | date: 'dd/MM/y'}}</span>
-  </div> 
+  </div>
 
   <br><br>
-  <historial [medico]="false"></historial>
+  <div class="card-panel">
+    <historial [medico]="false"></historial>
+  </div>
 </div>
 
 <ng-template #elseTemplate>

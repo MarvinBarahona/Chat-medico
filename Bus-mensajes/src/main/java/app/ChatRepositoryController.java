@@ -116,10 +116,14 @@ public class ChatRepositoryController {
         System.out.println("Deleting chat");
         User user = message.getUser();
         HashMap<String, Chat> officeChats = offices.get(user.getSchema());
-        Chat chat = officeChats.remove(id);
+        Chat chat = officeChats.get(id);
         
-        template.convertAndSend("/topic/removeChat/"+user.getSchema(), chat);
-        if(id.length() > 10) template.convertAndSend("/topic/removeStartedChat/"+user.getSchema(), chat);
+        if(chat != null){
+            chat = officeChats.remove(id);
+        
+            template.convertAndSend("/topic/removeChat/"+user.getSchema(), chat);
+            if(id.length() > 10) template.convertAndSend("/topic/removeStartedChat/"+user.getSchema(), chat);
+        }        
     }
 
     @MessageMapping("/getChats/{id}")

@@ -1,36 +1,33 @@
 <div *ngIf="consultations; else elseTemplate;">
-  <div class="card-panel">
-    <h5 class="center">Historial del usuario</h5>
-    <p>Seleccione una consulta para ver los detalles</p>
+  <h5 class="center">Historial del usuario</h5>
+  <p>Seleccione una consulta para ver los detalles</p>
 
-    <table class="highlight">
-      <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>{{medico ? 'Paciente' : 'Médico'}}</th>
-          <th>Título</th>
-        </tr>
-      </thead>
-      <tbody>
-        <p *ngIf="consultations.length == 0">No hay consultas registradas</p>
-        <tr *ngFor="let _consultation of consultations" (click)="consultation = _consultation">
-          <td>{{_consultation.date | date:'dd/MM/y HH:mm'}}</td>
-          <td>{{medico? _consultation.patient.name : _consultation.doctor.name }}</td>
-          <td>{{_consultation.diagnostic.title}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table class="highlight">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>{{medico ? 'Paciente' : 'Médico'}}</th>
+        <th>Título</th>
+      </tr>
+    </thead>
+    <tbody>
+      <p *ngIf="consultations.length == 0">No hay consultas registradas</p>
+      <tr *ngFor="let _consultation of consultations" (click)="consultation = _consultation">
+        <td>{{_consultation.date | date:'dd/MM/y HH:mm'}}</td>
+        <td>{{medico? _consultation.patient.name : _consultation.doctor.name }}</td>
+        <td>{{_consultation.diagnostic.title}}</td>
+      </tr>
+    </tbody>
+  </table>
 
   <br>
-  <div class="card-panel">
-    <strong>Detalle de la consulta</strong>
-    <p *ngIf="!consultation">Seleccione una consulta para ver sus detalles</p>
-    <consulta *ngIf="consultation" [consultation]='consultation'></consulta>
-    <br>
-    <button class="btn" (click)="consultation = null">Cerrar</button>
-  </div>
 
+  <strong>Detalle de la consulta</strong>
+  <p *ngIf="!consultation">Seleccione una consulta para ver sus detalles</p>
+  <br>
+  <consulta *ngIf="consultation" [consultation]='consultation'></consulta>
+  <br>
+  <button class="btn" (click)="consultation = null">Cerrar</button>
 </div>
 
 <ng-template #elseTemplate>

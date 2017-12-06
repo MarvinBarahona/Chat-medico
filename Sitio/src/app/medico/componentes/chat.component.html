@@ -5,6 +5,11 @@
   <a class="btn" routerLink="/medico/chats">Abandonar</a>
   <button type="button" class="btn" (click)="terminar()">Terminar</button>
 </div>
+<br><br>
+
+<div class="card-panel">
+  <historial [medico]="false"></historial>
+</div>
 
 <div class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalFicha">
   <div class="modal-content">

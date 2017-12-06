@@ -41,6 +41,6 @@ export class FichaComponent{
   registrar(){
     // Mandar mensaje al bus.
     this.stompService.sendWithUser('/app/saveConsultation', this.consultation);
-	  this.router.navigate(['/medico/atender']);
+	  this.router.navigate(['/medico/chats']);
   }
 }

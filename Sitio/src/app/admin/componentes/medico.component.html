@@ -7,10 +7,13 @@
     <span><strong>Código: </strong>{{doctor.code}}</span><br>
     <span><strong>Especialidad: </strong>{{doctor.speciality}}</span><br>
     <span><strong>Día de nacimiento: </strong>{{doctor.birthday | date: 'dd/MM/y'}}</span>
-  </div>  
+  </div>
 
   <br><br>
-  <historial [medico]="true"></historial>
+
+  <div class="card-panel">
+    <historial [medico]="true"></historial>
+  </div>
 </div>
 
 <ng-template #elseTemplate>

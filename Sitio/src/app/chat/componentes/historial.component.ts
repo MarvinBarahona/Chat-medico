@@ -21,7 +21,8 @@ export class HistorialComponent implements OnInit {
   }
 
   ngOnInit() {
-    let q = this.medico? 'Doctor' : 'Patient';
+    let q = this.medico ? 'Doctor' : 'Patient';
+
     setTimeout(() => {
       let sub = this.stompService.getStomp().subscribe('/topic/get' + q + 'HistoryResponse/' + this.id, (consultations: Consultation[]) => {
         this.consultations = consultations;
@@ -30,5 +31,5 @@ export class HistorialComponent implements OnInit {
 
       this.stompService.sendWithUser('/app/get' + q + 'History/' + this.id, "Obtener");
     }, 1000);
-  }  
+  }
 }
