@@ -20,11 +20,14 @@ import * as c from './componentes';
   ],
   declarations: [
     c.ChatComponent,
-    c.RecordatoriosComponent
+    c.RecordatoriosComponent,
+    c.HistorialComponent,
+    c.ConsultaComponent
   ],
   exports:[
     c.ChatComponent,
-    c.RecordatoriosComponent
+    c.RecordatoriosComponent,
+    c.HistorialComponent
   ],
   providers: []
 })

@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col s12 l8 offset-l2">
+    <div class="card-panel">
+      <h4>Registrar médico</h4>
+
+      <!-- Formulario -->
+      <form #pacienteForm="ngForm" (ngSubmit)="registrar()" autocomplete="off">
+        <div class="row">
+          <div class="input-field col s12 l8 offset-l2">
+            <input id="nombre" type="text" class="validate" name="nombre" [(ngModel)]="patient.name" required>
+            <label for="nombre">Nombre del paciente</label>
+          </div>
+          <div class="input-field col s12 l8 offset-l2">
+            <input id="codigo" type="text" class="validate" name="codigo" [(ngModel)]="patient.code" required>
+            <label for="codigo">Código</label>
+          </div>
+          <div class="input-field col s12 l8 offset-l2">
+            <ng-datepicker name="day" [(ngModel)]="patient.birthday" [options]="dpOptions"></ng-datepicker>
+            <label for="day" class="active">Fecha de nacimiento</label>
+          </div>
+        </div>
+
+        <!-- Botón -->
+        <div class="row">
+          <div class="center">
+            <button type="submit" class="btn" [disabled]="!pacienteForm.form.valid">Registrar</button>
+          </div>
+        </div>
+      </form>
+      <!-- /form -->
+
+      <!-- Mensajes -->
+      <div class="row">
+        <div class="alert alert-info col s6 offset-s3" *ngIf="message">
+          <p>{{message}}</p>
+        </div>
+      </div>
+
+    </div>
+    <!-- /card-panel -->
+  </div>
+  <!-- /col -->
+</div>
+<!-- /row -->

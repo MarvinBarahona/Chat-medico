@@ -18,7 +18,7 @@
     </div>
     <div class="col l4 s12">
       <recordatorios *ngIf="!chateando"></recordatorios>
-      <historial *ngIf="chateando"></historial>
+      <historial *ngIf="chateando" [medico]="false"></historial>
     </div>
   </div>
 

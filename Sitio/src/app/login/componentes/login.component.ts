@@ -26,7 +26,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {
     this.login = new Login();
     this.id = (new Date).getMilliseconds();
-    this.subscriptions = [];
+    this.subscriptions = [];    
+    this.cookieService.removeAll();
   }
 
   ngOnInit() {

@@ -13,7 +13,7 @@ import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.stereotype.Controller;
-import pojo.Office;
+import pojo.general.Office;
 
 @Controller
 public class OfficeController {

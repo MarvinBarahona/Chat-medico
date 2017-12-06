@@ -8,10 +8,8 @@
 
 <div class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalFicha">
   <div class="modal-content">
-    <ficha></ficha>
+    <ficha [consultation]="consultation"></ficha>
   </div>
   <div class="modal-footer">
-    <a class="btn">Sí</a>
-    <a class="btn" (click)="closeFicha()">No</a>
   </div>
 </div>

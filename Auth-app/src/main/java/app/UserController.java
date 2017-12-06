@@ -1,5 +1,6 @@
 package app;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import models.LoginUser;
 import models.Office;
@@ -18,6 +19,8 @@ public class UserController {
     @Autowired
     private SimpMessagingTemplate template; 
     
+    ObjectMapper mapper = new ObjectMapper();
+    
     @Autowired
     private LoginUserRepository userRepository;
     
@@ -27,6 +30,7 @@ public class UserController {
     @MessageMapping("/getUsers/{id}")
     @SendTo("/topic/getUsersResponse/{id}")
     public ArrayList<User> getUsers(String schema){
+        System.out.println("Getting users");
         Office office = officeRepository.findBySchema(schema);        
         ArrayList<LoginUser> loginUsers = userRepository.findByOffice(office);
         
@@ -36,14 +40,14 @@ public class UserController {
         return users;
     }
     
-    @MessageMapping("/saveUser/{id}")
-    public void saveUser(User user) throws Exception {
+    @MessageMapping("/saveUser")
+    public void saveUser(User user){
         System.out.println("Saving user");
         
         LoginUser loginUser = userRepository.findOne(user.getId());
         
         loginUser.setActive(user.isActive());
-        if(user.getNewPassword() != null && !"".equals(user.getNewPassword()))loginUser.setPassword(BCrypt.hashpw(user.getNewPassword(), BCrypt.gensalt(10)));
+        if(!"".equals(user.getNewPassword()))loginUser.setPassword(BCrypt.hashpw(user.getNewPassword(), BCrypt.gensalt(10)));
         
         userRepository.save(loginUser);
     }

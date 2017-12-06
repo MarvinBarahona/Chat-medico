@@ -1,4 +1,4 @@
-<div *ngIf="users; else elseTemplate" class="card-panel">
+<div *ngIf="doctors && patients; else elseTemplate" class="card-panel">
   <h5>Usuarios</h5>
 
   <table>
@@ -10,17 +10,58 @@
       </tr>
     </thead>
     <tbody>
-      <p *ngIf="users.length == 0">No hay registros que mostrar</p>
-      <tr *ngFor="let user of users">
-        <th>{{user.name}}</th>
-        <th>{{user.role}}</th>
+      <p *ngIf="doctors.length == 0">No hay registros que mostrar</p>
+      <tr *ngFor="let doctor of doctors">
+        <th><a [routerLink]="['/admin/medicos/' + doctor.id]">{{doctor.name}}</a></th>
+        <th>{{doctor.role}}</th>
         <th>
-          <input type="checkbox" class="filled-in" [id]="user.id" [(ngModel)]="user.active" (change)="guardar(user)"/>
-          <label for="{{user.id}}"></label>
+          <input type="checkbox" class="filled-in" [id]="doctor.id" [(ngModel)]="doctor.active" (change)="guardar(doctor)"/>
+          <label for="{{doctor.id}}"></label>
         </th>
       </tr>
     </tbody>
   </table>
+
+  <br>
+
+  <div class="row">
+    <div class="center">
+      <a class="btn" routerLink="/admin/medicos/nuevoMasivo">Agregar desde archivo</a>
+      <a class="btn" routerLink="/admin/medicos/nuevoIndividual">Agregar desde formulario</a>
+    </div>
+  </div>
+
+  <br><br>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Rol</th>
+        <th>Activo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <p *ngIf="patients.length == 0">No hay registros que mostrar</p>
+      <tr *ngFor="let patient of patients">
+        <th><a [routerLink]="['/admin/pacientes/' + patient.id]">{{patient.name}}</a></th>
+        <th>{{patient.role}}</th>
+        <th>
+          <input type="checkbox" class="filled-in" [id]="patient.id" [(ngModel)]="patient.active" (change)="guardar(patient)"/>
+          <label for="{{patient.id}}"></label>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <div class="row">
+    <div class="center">
+      <a class="btn" routerLink="/admin/pacientes/nuevoMasivo">Agregar desde archivo</a>
+      <a class="btn" routerLink="/admin/pacientes/nuevoIndividual">Agregar desde formulario</a>
+    </div>
+  </div>
 </div>
 
 <ng-template #elseTemplate>

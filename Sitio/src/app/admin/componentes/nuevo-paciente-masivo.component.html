@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col s12">
+    <div class="card-panel">
+      <h4>Registrar pacientes</h4>
+
+      <!-- Formulario -->
+      <form #pacientesForm="ngForm" (ngSubmit)="registrar()" autocomplete="off">
+        <div class="row">
+          <div class="input-field col s12 l8 offset-l2">
+            <div class="file-field input-field">
+              <div class="btn">
+                <span>Archivo</span>
+                <input type="file" (change)="cargar($event)" accept=".csv,.json" required>
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path" type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón -->
+        <div class="row">
+          <div class="center">
+            <button type="submit" class="btn" [disabled]="!pacientesForm.form.valid">Registrar</button>
+          </div>
+        </div>
+      </form>
+      <!-- /form -->
+
+      <!-- Mensajes -->
+      <div class="row">
+        <div class="alert alert-info col s6 offset-s3" *ngIf="message">
+          <p>{{message}}</p>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Código</th>
+            <th>Fecha de nacimiento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <p *ngIf="patients.length == 0">No hay registros que mostrar</p>
+          <tr *ngFor="let patient of patients">
+            <th>{{patient.name}}</th>
+            <th>{{patient.code}}</th>
+            <th>{{patient.birthday | date:'dd/MM/y'}}</th>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <!-- /card-panel -->
+  </div>
+  <!-- /col -->
+</div>
+<!-- /row -->

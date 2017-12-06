@@ -44,7 +44,7 @@ export class ActivarComponent implements OnInit, OnDestroy {
 
   guardar(){
     this.user.active = true;
-    this.stompService.sendWithUser("/app/saveUser/" + this.id, this.user);
+    this.stompService.sendWithUser("/app/saveUser", this.user);
     this.closeModal();
   }
 

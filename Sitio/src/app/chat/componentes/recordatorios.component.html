@@ -5,7 +5,7 @@
     <div *ngFor="let conference of conferences">
       <p>
         <a (click)="agregar(conference)">{{conference.topic}}</a><br>
-        <span>{{conference.date | date: 'dd/MM/yy hh:mm'}}</span>
+        <span>{{conference.date | date: 'dd/MM/yy HH:mm'}}</span>
       </p>
     </div>
 

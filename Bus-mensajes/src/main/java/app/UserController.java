@@ -59,10 +59,11 @@ public class UserController {
         session.send("/auth/getUsers/"+id, m.getBytes());
     }
     
-    @MessageMapping("/saveUser/{id}")
-    public void saveUser(Message message, @DestinationVariable String id) throws Exception {
+    @MessageMapping("/saveUser")
+    public void saveUser(Message message) throws Exception {
         System.out.println("Saving user");
         User user = mapper.convertValue(message.getObject(), User.class);
+        if(user.getNewPassword() == null) user.setNewPassword("");
         
         // Obtener una sesión de token. 
         StompClient stompClient = new StompClient();
@@ -70,7 +71,7 @@ public class UserController {
         
         // Mandar mensaje a la app. 
         String m = mapper.writeValueAsString(user);
-        session.send("/auth/saveUser/"+id, m.getBytes());
+        session.send("/auth/saveUser", m.getBytes("UTF-8"));
         
         session.disconnect();
     }

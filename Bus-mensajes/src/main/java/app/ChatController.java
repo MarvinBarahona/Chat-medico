@@ -1,16 +1,14 @@
 package app;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import pojo.ChatMessage;
+import pojo.chat.ChatMessage;
 import pojo.Message;
 import pojo.User;
 
 @Controller
 public class ChatController {    
-    ObjectMapper mapper = new ObjectMapper();
     
     @MessageMapping("/joinChat/{id}")
     @SendTo("/topic/chat/{id}")

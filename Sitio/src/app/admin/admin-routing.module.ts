@@ -27,20 +27,38 @@ const routes: Routes = [
         data: {role: "admin"}
       },
       {
-        path: 'usuarios/nuevoMasivo',
-        component: c.NuevoUsuarioMasivoComponent,
+        path: 'medicos/nuevoMasivo',
+        component: c.NuevoMedicoMasivoComponent,
         canActivate: [AppAuthGuard],
         data: {role: "admin"}
       },
       {
-        path: 'usuarios/nuevoIndividual',
-        component: c.NuevoUsuarioIndividualComponent,
+        path: 'medicos/nuevoIndividual',
+        component: c.NuevoMedicoIndividualComponent,
         canActivate: [AppAuthGuard],
         data: {role: "admin"}
       },
       {
-        path: 'usuarios/:id',
-        component: c.UsuarioComponent,
+        path: 'pacientes/nuevoMasivo',
+        component: c.NuevoPacienteMasivoComponent,
+        canActivate: [AppAuthGuard],
+        data: {role: "admin"}
+      },
+      {
+        path: 'pacientes/nuevoIndividual',
+        component: c.NuevoPacienteIndividualComponent,
+        canActivate: [AppAuthGuard],
+        data: {role: "admin"}
+      },
+      {
+        path: 'medicos/:id',
+        component: c.MedicoComponent,
+        canActivate: [AppAuthGuard],
+        data: {role: "admin"}
+      },
+      {
+        path: 'pacientes/:id',
+        component: c.PacienteComponent,
         canActivate: [AppAuthGuard],
         data: {role: "admin"}
       }

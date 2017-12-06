@@ -17,8 +17,8 @@ import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.stereotype.Controller;
-import pojo.Chat;
-import pojo.Conference;
+import pojo.chat.Chat;
+import pojo.mongo.Conference;
 import pojo.Message;
 import pojo.User;
 

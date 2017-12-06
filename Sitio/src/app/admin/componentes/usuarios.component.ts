@@ -10,7 +10,8 @@ import { User } from './../../login/';
 })
 
 export class UsuariosComponent implements OnInit, OnDestroy {
-  users: User[];
+  doctors: User[];
+  patients: User[];
   id: number;
   sub: any;
 
@@ -21,7 +22,8 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   ngOnInit() {
     setTimeout(()=>{
       this.sub = this.stompService.getStomp().subscribe('/topic/getUsersResponse/' + this.id, (users: User[]) => {
-        this.users = users;
+        this.doctors = users.filter((user: User)=>{ return user.role == "medico";});
+        this.patients = users.filter((user: User)=>{ return user.role == "paciente";});
       });
 
       this.stompService.sendWithUser("/app/getUsers/" + this.id, "Recuperar");
@@ -29,7 +31,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
   guardar(user: User){
-    this.stompService.sendWithUser("/app/saveUser/" + this.id, user);
+    this.stompService.sendWithUser("/app/saveUser", user);
   }
 
   ngOnDestroy(){

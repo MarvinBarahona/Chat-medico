@@ -12,6 +12,7 @@ import { MyStompService } from './stompService/';
 })
 export class AppComponent implements OnInit, OnDestroy {
   usuario: string;
+  office: string;
 
   constructor(private router: Router, private cookieService: CookieService, private stompService: MyStompService) { }
 
@@ -20,13 +21,18 @@ export class AppComponent implements OnInit, OnDestroy {
       .filter(event => event instanceof NavigationEnd)
       .subscribe((event) => {
         let u = this.cookieService.getObject('user');
-        if (u) this.usuario = u['name'];
-        else this.usuario = null;
+        if (u){
+			this.usuario = u['name'];
+			this.office = u['officeName'];
+		}
+        else{
+			this.usuario = null;
+			this.office = "Chat médico";
+		}
     });
   }
 
   cerrarSesion() {
-    this.cookieService.removeAll();
     this.router.navigate(["/login"]);
   }
 

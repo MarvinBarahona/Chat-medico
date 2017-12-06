@@ -1,0 +1,29 @@
+<span><strong>Médico: </strong>{{consultation.doctor.name}}</span><br>
+<span><strong>Paciente: </strong>{{consultation.patient.name}}</span><br><br>
+
+<span><strong>Diagnóstico: </strong></span><br>
+<span>Síntomas: {{consultation.diagnostic.symptom}}</span><br>
+<span>Descripción: {{consultation.diagnostic.description}}</span>
+
+<br><br>
+
+<span><strong>Receta: </strong></span><br>
+<div *ngIf="consultation.prescription">
+  <span>Medicinas: {{consultation.prescription.medicine}}</span><br>
+  <span>Dosis: {{consultation.prescription.dose}}</span><br>
+  <span>Indicación: {{consultation.prescription.indication}}</span>
+</div>
+<div *ngIf="!consultation.prescription">
+  <span>No se recetó medicamento.</span>
+</div>
+
+<br><br>
+
+<span><strong>Referencia: </strong></span><br>
+<div *ngIf="consultation.reference">
+  <span>Especialidad: {{consultation.reference.speciality}}</span><br>
+  <span>Causas: {{consultation.reference.description}}</span>
+</div>
+<div *ngIf="!consultation.reference">
+  <span>No se realizó referencia.</span>
+</div>

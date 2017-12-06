@@ -10,6 +10,8 @@ import { NgDatepickerModule } from 'ng2-datepicker';
 import { AdminRoutingModule } from './admin-routing.module';
 import * as c from './componentes';
 
+import { ChatModule } from './../chat';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -18,15 +20,19 @@ import * as c from './componentes';
     MaterializeModule,
     NgDatepickerModule,
     CookieModule.forChild(),
+    ChatModule,
     AdminRoutingModule
   ],
   declarations: [
     c.AdminRootComponent,
     c.ConversatoriosComponent,
-    c.UsuarioComponent,
+    c.PacienteComponent,
+    c.MedicoComponent,
     c.UsuariosComponent,
-    c.NuevoUsuarioMasivoComponent,
-    c.NuevoUsuarioIndividualComponent
+    c.NuevoPacienteMasivoComponent,
+    c.NuevoMedicoMasivoComponent,
+    c.NuevoPacienteIndividualComponent,
+    c.NuevoMedicoIndividualComponent
   ],
   providers: []
 })

@@ -1,1 +1,79 @@
-<p>Ficha</p>
+<!-- Formulario -->
+<form #fichaForm="ngForm" (ngSubmit)="registrar()" autocomplete="off">
+  <div class="row">
+    <div class="input-field col s12 l8 offset-l2">
+      <input id="titulo" type="text" class="validate" name="titulo" [(ngModel)]="consultation.diagnostic.title" required>
+      <label for="titulo">Título</label>
+    </div>
+    <div class="input-field col s12 l8 offset-l2">
+      <input id="descr" type="text" class="validate" name="descr" [(ngModel)]="consultation.diagnostic.description" required>
+      <label for="descr">Descripción</label>
+    </div>
+    <div class="input-field col s12 l8 offset-l2">
+      <input id="sint" type="text" class="validate" name="sint" [(ngModel)]="consultation.diagnostic.symptom" required>
+      <label for="sint">Síntomas</label>
+    </div>
+  </div>
+</form>
+<!-- /form -->
+
+<!-- Formulario -->
+<form #recetaForm="ngForm" (ngSubmit)="addingPrescription = false" autocomplete="off" *ngIf="addingPrescription">
+  <div class="row">
+    <div class="input-field col s12 l8 offset-l2">
+      <input id="medicine" type="text" class="validate" name="medicine" [(ngModel)]="consultation.prescription.medicine" required>
+      <label for="medicine">Medicamento</label>
+    </div>
+    <div class="input-field col s12 l8 offset-l2">
+      <input id="dose" type="text" class="validate" name="dose" [(ngModel)]="consultation.prescription.dose" required>
+      <label for="dose">Dosis</label>
+    </div>
+    <div class="input-field col s12 l8 offset-l2">
+      <input id="indication" type="text" class="validate" name="indication" [(ngModel)]="consultation.prescription.indication" required>
+      <label for="indication">Indicaciones</label>
+    </div>
+  </div>
+
+  <!-- Botón -->
+  <div class="row">
+    <div class="center">
+      <button type="submit" class="btn" [disabled]="!recetaForm.form.valid">Agregar</button>
+      <button type="button" class="btn" (click)="cancelPrescription()">Cancelar</button>
+    </div>
+  </div>
+</form>
+<!-- /form -->
+
+<!-- Formulario -->
+<form #referenciaForm="ngForm" (ngSubmit)="addingReference = false" autocomplete="off" *ngIf="addingReference">
+  <div class="row">
+    <div class="input-field col s12 l8 offset-l2">
+      <input id="espec" type="text" class="validate" name="espec" [(ngModel)]="consultation.reference.speciality" required>
+      <label for="espec">Especialidad</label>
+    </div>
+    <div class="input-field col s12 l8 offset-l2">
+      <input id="descri" type="text" class="validate" name="descri" [(ngModel)]="consultation.reference.description" required>
+      <label for="descri">Causas</label>
+    </div>
+  </div>
+
+  <!-- Botón -->
+  <div class="row">
+    <div class="center">
+      <button type="submit" class="btn" [disabled]="!referenciaForm.form.valid">Agregar</button>
+      <button type="button" class="btn" (click)="cancelReference()">Cancelar</button>
+    </div>
+  </div>
+</form>
+<!-- /form -->
+
+<!-- Botón -->
+<div *ngIf="!addingPrescription && !addingReference">
+  <div class="row center">
+    <button type="button" class="btn" (click)="addPrescription()">Receta</button>
+    <button type="button" class="btn" (click)="addReference()">Referencia</button>
+  </div>
+  <div class="row center">
+    <button type="submit" class="btn" [disabled]="!fichaForm.form.valid">Registrar</button>
+  </div>
+</div>
