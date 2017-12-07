@@ -1,7 +1,12 @@
 package app;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.LoginUser;
 import models.Office;
 import models.User;
@@ -39,6 +44,46 @@ public class UserController {
         
         return users;
     }
+    
+    @MessageMapping("/createUser/{id}")
+    @SendTo("/topic/createUserResponse/{id}")
+    public User create(User user) {
+        System.out.println("Saving user");        
+        Office office = officeRepository.findBySchema(user.getSchema());
+        
+        LoginUser loginUser = new LoginUser(user, office);
+        loginUser = userRepository.save(loginUser);
+        return new User(loginUser);
+    } 
+    
+    @MessageMapping("/createUsers/{id}")
+    @SendTo("/topic/createUsersResponse/{id}")
+    public ArrayList<User> create(Object u) {
+        System.out.println("Saving users");            
+        ArrayList<User> users = null;
+        try {            
+            users = mapper.readValue(new String((byte[]) u, "UTF-8"), new TypeReference<ArrayList<User>>(){});
+        } catch (IOException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Office office = officeRepository.findBySchema(users.get(0).getSchema());
+            
+        Collection<LoginUser> loginUsers = new ArrayList<>();
+        for(User _user : users){
+            loginUsers.add(new LoginUser(_user, office));
+        }
+
+        loginUsers = (ArrayList<LoginUser>)userRepository.save(loginUsers);
+
+        users.clear();
+
+        for(LoginUser _loginUser : loginUsers){
+            users.add(new User(_loginUser));
+        }    
+        
+        return users;
+    } 
     
     @MessageMapping("/saveUser")
     public void saveUser(User user){

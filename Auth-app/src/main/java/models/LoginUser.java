@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name="cuenta")
 public class LoginUser implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name="cuenta_id")
     private long id;
     
@@ -44,6 +44,15 @@ public class LoginUser implements Serializable {
         this.username = username;
         this.name = name;
         this.password = password;
+    }
+    
+    public LoginUser(User user, Office office){
+        this.name = user.getName();
+        this.office = office;
+        this.username = user.getOfficeName() + "@" + user.getSchema();
+        if(user.getRole().equals("medico")) this.role = new Role(4, "medico");
+        if(user.getRole().equals("paciente")) this.role = new Role(3, "paciente");
+        this.active = false;
     }
 
     public long getId() {
