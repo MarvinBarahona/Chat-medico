@@ -1,5 +1,7 @@
 package pojo;
 
+import pojo.jpa.Doctor;
+
 public class User {
     private long id;
     private String name; 
@@ -18,6 +20,13 @@ public class User {
         this.officeName = officeName;
         this.schema = schema;
         this.active = active;
+    }
+    
+    public User(Doctor doctor, String schema){
+        this.officeName = doctor.getCode();
+        this.name = doctor.getName();
+        this.role = "medico";
+        this.schema = schema;
     }
 
     public long getId() {

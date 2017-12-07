@@ -16,13 +16,6 @@ public class Application implements WebApplicationInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-//        //Primeras pruebas con POST
-//        HttpConfig peticiones = new HttpConfig();
-//        NameValuePair parametro = new BasicNameValuePair("nombre", "Enviado desde Bus2");
-//        NameValuePair parametro2 = new BasicNameValuePair("apellido", "Enviado desde Bus");
-//        System.out.println(peticiones.httpPostSimple("http://localhost:8070/consultorio_1/medico/add", parametro, parametro2));
-//         //Primeras pruebas con GET
-//        System.out.println(peticiones.httpGetSimple("http://localhost:8070/consultorio_1/medico/"));
     }
 
     @Override
