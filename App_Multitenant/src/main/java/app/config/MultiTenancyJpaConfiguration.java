@@ -1,6 +1,6 @@
 package app.config;
 
-import app.models.Consulta;
+import app.models.Consultation;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -47,6 +47,6 @@ public class MultiTenancyJpaConfiguration {
 		hibernateProps.put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, currentTenantIdentifierResolver);
 		hibernateProps.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
 
-		return builder.dataSource(dataSource).packages(Consulta.class.getPackage().getName()).properties(hibernateProps).jta(false).build();
+		return builder.dataSource(dataSource).packages(Consultation.class.getPackage().getName()).properties(hibernateProps).jta(false).build();
 	}
 }

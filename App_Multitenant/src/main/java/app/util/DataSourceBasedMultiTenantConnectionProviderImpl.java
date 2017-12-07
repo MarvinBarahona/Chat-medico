@@ -14,53 +14,25 @@ que gestiona la fuente de datos a enviar por cada peticion*/
 public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl {
 
     private static final long serialVersionUID = 8168907057647334460L;
-    private static final String DEFAULT_TENANT_ID = "consultorio_1";
+    private static final String DEFAULT_TENANT_ID = "prueba";
 
     @Autowired
-    private DataSource dataSource1;
+    private DataSource dataSourcePrueba1;
 
     @Autowired
-    private DataSource dataSource2;
+    private DataSource dataSourcePrueba2;
 
     @Autowired
-    private DataSource dataSource3;
-
-    @Autowired
-    private DataSource dataSource4;
-
-    @Autowired
-    private DataSource dataSource5;
-
-    @Autowired
-    private DataSource dataSource6;
-
-    @Autowired
-    private DataSource dataSource7;
-
-    @Autowired
-    private DataSource dataSource8;
-
-    @Autowired
-    private DataSource dataSource9;
-
-    @Autowired
-    private DataSource dataSource10;
+    private DataSource dataSourcePrueba3;
 
     private Map<String, DataSource> map;
 
     @PostConstruct
     public void load() {
         map = new HashMap<>();
-        map.put("consultorio_1", dataSource1);
-        map.put("consultorio_2", dataSource2);
-        map.put("consultorio_3", dataSource3);
-        map.put("consultorio_4", dataSource4);
-        map.put("consultorio_5", dataSource5);
-        map.put("consultorio_6", dataSource6);
-        map.put("consultorio_7", dataSource7);
-        map.put("consultorio_8", dataSource8);
-        map.put("consultorio_9", dataSource9);
-        map.put("consultorio_10", dataSource10);
+        map.put("prueba", dataSourcePrueba1);
+        map.put("prueba2", dataSourcePrueba2);
+        map.put("prueba3", dataSourcePrueba3);
     }
 
     @Override
