@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name="cuenta")
 public class LoginUser implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="cuenta_id")
     private long id;
     

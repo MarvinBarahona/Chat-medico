@@ -49,7 +49,7 @@ export class NuevoMedicoMasivoComponent implements OnInit, OnDestroy {
         this.doctors = [];
         data.forEach((d)=>{
           let doctor = new Doctor;
-          doctor.name = d["name"];
+          doctor.name = "Dr." + d["name"];
           doctor.code = d["code"];
           doctor.speciality = d["speciality"];
           doctor.birthday = new Date(d["birthdayStr"]);
@@ -69,7 +69,7 @@ export class NuevoMedicoMasivoComponent implements OnInit, OnDestroy {
         this.doctors = [];
         data.forEach((d)=>{
           let doctor = new Doctor;
-          doctor.name = d["name"];
+          doctor.name = "Dr." + d["name"];
           doctor.code = d["code"];
           doctor.speciality = d["speciality"];
           doctor.birthday = new Date(d["birthdayStr"]);

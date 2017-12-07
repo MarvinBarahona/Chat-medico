@@ -1,11 +1,8 @@
 package app.models;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,8 +12,6 @@ public class Diagnostic implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Basic(optional = false)
     @Column(name = "id_diagnostico")
     private Integer id;
 
@@ -27,7 +22,7 @@ public class Diagnostic implements Serializable {
     private String title;
      
     @Column(name = "sintoma")
-    private String simptom;
+    private String symptom;
 
     public Diagnostic() {
     }
@@ -56,12 +51,12 @@ public class Diagnostic implements Serializable {
         this.title = title;
     }
 
-    public String getSimptom() {
-        return simptom;
+    public String getSymptom() {
+        return symptom;
     }
 
-    public void setSimptom(String simptom) {
-        this.simptom = simptom;
+    public void setSymptom(String symptom) {
+        this.symptom = symptom;
     }
 
     

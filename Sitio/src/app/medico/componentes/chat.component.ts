@@ -22,7 +22,7 @@ export class ChatComponent implements OnInit, OnDestroy{
 	  this.consultation.patient = new Patient;
     this.consultation.patient.id = this.id;
     this.consultation.doctor = new Doctor;
-	  this.consultation.date = new Date;
+	  this.consultation.date = new Date(Date.now());
     this.consultation.diagnostic = new Diagnostic;
     this.consultation.doctor.id = this.stompService.getUser().id;
   }

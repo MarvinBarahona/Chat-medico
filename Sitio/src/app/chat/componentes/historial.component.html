@@ -1,6 +1,5 @@
 <div *ngIf="consultations; else elseTemplate;">
   <h5 class="center">Historial del usuario</h5>
-  <p>Seleccione una consulta para ver los detalles</p>
 
   <table class="highlight">
     <thead>
@@ -22,12 +21,18 @@
 
   <br>
 
-  <strong>Detalle de la consulta</strong>
+  <h5 class="center">Detalle de consulta</h5>
   <p *ngIf="!consultation">Seleccione una consulta para ver sus detalles</p>
   <br>
   <consulta *ngIf="consultation" [consultation]='consultation'></consulta>
   <br>
-  <button class="btn" (click)="consultation = null">Cerrar</button>
+
+  <div class="right">
+    <button class="btn" (click)="consultation = null">Cerrar</button>
+  </div>
+
+  <br><br>
+
 </div>
 
 <ng-template #elseTemplate>

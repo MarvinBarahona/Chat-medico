@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 @Table(name="consultorio")
 public class Office implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="consultorio_id")
     private long id;
     

@@ -46,6 +46,7 @@ export class NuevoMedicoIndividualComponent implements OnInit, OnDestroy {
 
   registrar() {
     this.message = "Creando...";
+    this.doctor.name = "Dr. " + this.doctor.name;
 
     // Mandar mensaje al bus.
     this.stompService.sendWithUser('/app/saveDoctor/'+this.id, this.doctor);
